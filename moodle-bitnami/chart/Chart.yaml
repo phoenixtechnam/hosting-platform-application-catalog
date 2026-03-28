@@ -1,0 +1,6 @@
+apiVersion: v2
+name: moodle-bitnami
+description: Bitnami-packaged Moodle LMS with MariaDB, Redis session cache, and scheduled cron
+type: application
+version: 1.0.0
+appVersion: "4.5"

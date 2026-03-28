@@ -8,9 +8,13 @@ For **composable building blocks** (generic PHP/Node.js runtimes, databases, Red
 
 ## Applications
 
-| Name | Category | Components | Tenancy | Default Resources |
-|------|----------|------------|---------|-------------------|
-| WordPress | CMS | App + MariaDB + CronJob | Single | 0.50 CPU, 512Mi, 10Gi |
+| Name | Category | Components | Tenancy | Min Resources | Host Ports |
+|------|----------|------------|---------|---------------|------------|
+| WordPress | CMS | App + MariaDB + Redis + CronJob | Single | 0.25 CPU, 256Mi | None |
+| Nextcloud | Productivity | App + MariaDB + Redis + Collabora + Cron | Single/Multi | 0.50 CPU, 512Mi | None |
+| Jitsi Meet | Communication | Web + Prosody + JiCoFo + JVB + Coturn | Single | 1.00 CPU, 2Gi | UDP 10000, UDP 3478 |
+| Moodle Bitnami | Education | App + MariaDB + Redis + Cron | Single | 0.50 CPU, 1Gi | None |
+| Coturn | Communication | TURN/STUN server | Single | 0.10 CPU, 64Mi | UDP/TCP 3478 |
 
 ## How It Works
 

@@ -1,27 +1,27 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "wordpress.fullname" . }}
+  name: {{ include "moodle-bitnami.fullname" . }}
   labels:
-    {{- include "wordpress.labels" . | nindent 4 }}
-    app.kubernetes.io/component: wordpress
+    {{- include "moodle-bitnami.labels" . | nindent 4 }}
+    app.kubernetes.io/component: moodle
 spec:
   type: ClusterIP
   ports:
-    - port: 80
+    - port: 8080
       targetPort: http
       protocol: TCP
       name: http
   selector:
-    {{- include "wordpress.selectorLabels" . | nindent 4 }}
-    app.kubernetes.io/component: wordpress
+    {{- include "moodle-bitnami.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: moodle
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "wordpress.fullname" . }}-mariadb
+  name: {{ include "moodle-bitnami.fullname" . }}-mariadb
   labels:
-    {{- include "wordpress.labels" . | nindent 4 }}
+    {{- include "moodle-bitnami.labels" . | nindent 4 }}
     app.kubernetes.io/component: mariadb
 spec:
   type: ClusterIP
@@ -32,16 +32,16 @@ spec:
       protocol: TCP
       name: mysql
   selector:
-    {{- include "wordpress.selectorLabels" . | nindent 4 }}
+    {{- include "moodle-bitnami.selectorLabels" . | nindent 4 }}
     app.kubernetes.io/component: mariadb
 {{- if .Values.redis.enabled }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "wordpress.fullname" . }}-redis
+  name: {{ include "moodle-bitnami.fullname" . }}-redis
   labels:
-    {{- include "wordpress.labels" . | nindent 4 }}
+    {{- include "moodle-bitnami.labels" . | nindent 4 }}
     app.kubernetes.io/component: redis
 spec:
   type: ClusterIP
@@ -51,6 +51,6 @@ spec:
       protocol: TCP
       name: redis
   selector:
-    {{- include "wordpress.selectorLabels" . | nindent 4 }}
+    {{- include "moodle-bitnami.selectorLabels" . | nindent 4 }}
     app.kubernetes.io/component: redis
 {{- end }}

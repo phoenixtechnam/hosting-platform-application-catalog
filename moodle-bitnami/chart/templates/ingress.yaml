@@ -2,11 +2,13 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ include "wordpress.fullname" . }}
+  name: {{ include "moodle-bitnami.fullname" . }}
   labels:
-    {{- include "wordpress.labels" . | nindent 4 }}
+    {{- include "moodle-bitnami.labels" . | nindent 4 }}
   annotations:
-    nginx.ingress.kubernetes.io/proxy-body-size: {{ .Values.ingress.annotations | index "nginx.ingress.kubernetes.io/proxy-body-size" | default "64m" | quote }}
+    nginx.ingress.kubernetes.io/proxy-body-size: {{ .Values.ingress.annotations | index "nginx.ingress.kubernetes.io/proxy-body-size" | default "256m" | quote }}
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
     {{- if .Values.ingress.tls }}
     cert-manager.io/cluster-issuer: letsencrypt-prod
     {{- end }}
@@ -16,7 +18,7 @@ spec:
   tls:
     - hosts:
         - {{ .Values.ingress.domain }}
-      secretName: {{ include "wordpress.fullname" . }}-tls
+      secretName: {{ include "moodle-bitnami.fullname" . }}-tls
   {{- end }}
   rules:
     - host: {{ .Values.ingress.domain }}
@@ -26,7 +28,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: {{ include "wordpress.fullname" . }}
+                name: {{ include "moodle-bitnami.fullname" . }}
                 port:
-                  number: 80
+                  number: 8080
 {{- end }}

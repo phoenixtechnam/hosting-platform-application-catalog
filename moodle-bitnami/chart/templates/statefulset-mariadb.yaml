@@ -1,23 +1,25 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ include "wordpress.fullname" . }}-mariadb
+  name: {{ include "moodle-bitnami.fullname" . }}-mariadb
   labels:
-    {{- include "wordpress.labels" . | nindent 4 }}
+    {{- include "moodle-bitnami.labels" . | nindent 4 }}
     app.kubernetes.io/component: mariadb
 spec:
-  serviceName: {{ include "wordpress.fullname" . }}-mariadb
+  serviceName: {{ include "moodle-bitnami.fullname" . }}-mariadb
   replicas: 1
   selector:
     matchLabels:
-      {{- include "wordpress.selectorLabels" . | nindent 6 }}
+      {{- include "moodle-bitnami.selectorLabels" . | nindent 6 }}
       app.kubernetes.io/component: mariadb
   template:
     metadata:
       labels:
-        {{- include "wordpress.selectorLabels" . | nindent 8 }}
+        {{- include "moodle-bitnami.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: mariadb
     spec:
+      securityContext:
+        fsGroup: 1001
       containers:
         - name: mariadb
           image: {{ .Values.mariadb.image }}
@@ -27,7 +29,14 @@ spec:
               protocol: TCP
           envFrom:
             - secretRef:
-                name: {{ include "wordpress.fullname" . }}-secret
+                name: {{ include "moodle-bitnami.fullname" . }}-secret
+          env:
+            - name: MARIADB_CHARACTER_SET
+              value: "utf8mb4"
+            - name: MARIADB_COLLATE
+              value: "utf8mb4_unicode_ci"
+            - name: MARIADB_EXTRA_FLAGS
+              value: "--innodb-buffer-pool-size=256M --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci"
           resources:
             requests:
               cpu: {{ .Values.mariadb.resources.requests.cpu }}
@@ -37,13 +46,13 @@ spec:
               memory: {{ .Values.mariadb.resources.limits.memory }}
           volumeMounts:
             - name: db-data
-              mountPath: /var/lib/mysql
+              mountPath: /bitnami/mariadb
           livenessProbe:
             exec:
               command:
-                - healthcheck.sh
-                - --connect
-                - --innodb_initialized
+                - /bin/bash
+                - -c
+                - mysqladmin ping -u root -p"${MARIADB_ROOT_PASSWORD}"
             initialDelaySeconds: 30
             periodSeconds: 15
             timeoutSeconds: 5
@@ -51,12 +60,16 @@ spec:
           readinessProbe:
             exec:
               command:
-                - healthcheck.sh
-                - --connect
+                - /bin/bash
+                - -c
+                - mysqladmin ping -u root -p"${MARIADB_ROOT_PASSWORD}"
             initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 3
             failureThreshold: 3
+          securityContext:
+            runAsUser: 1001
+            runAsNonRoot: true
   volumeClaimTemplates:
     - metadata:
         name: db-data

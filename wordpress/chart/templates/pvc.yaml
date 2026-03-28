@@ -10,4 +10,4 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: {{ .Values.wpContent.storage }}
+      storage: {{ .Values.wpContent.storageSize }}

@@ -1,7 +1,7 @@
 {{/*
 Generate the fullname for resources.
 */}}
-{{- define "wordpress.fullname" -}}
+{{- define "moodle-bitnami.fullname" -}}
 {{- if .Release.Name -}}
 {{- printf "%s-%s" .Release.Name .Chart.Name | trunc 63 | trimSuffix "-" -}}
 {{- else -}}
@@ -12,17 +12,17 @@ Generate the fullname for resources.
 {{/*
 Common labels applied to all resources.
 */}}
-{{- define "wordpress.labels" -}}
+{{- define "moodle-bitnami.labels" -}}
 helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{ include "wordpress.selectorLabels" . }}
+{{ include "moodle-bitnami.selectorLabels" . }}
 {{- end -}}
 
 {{/*
 Selector labels used in matchLabels and label selectors.
 */}}
-{{- define "wordpress.selectorLabels" -}}
+{{- define "moodle-bitnami.selectorLabels" -}}
 app.kubernetes.io/name: {{ .Chart.Name }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}

@@ -1,14 +1,6 @@
 apiVersion: v2
 name: wordpress
-description: Managed WordPress with MariaDB — deployed by K8s Hosting Platform
-version: 1.0.0
-appVersion: "6.x"
+description: Managed WordPress CMS with MariaDB, Redis object cache, and scheduled maintenance
 type: application
-keywords:
-  - wordpress
-  - cms
-  - php
-  - blog
-home: https://wordpress.org
-sources:
-  - https://github.com/phoenixtechnam/hosting-platform-application-catalog
+version: 1.0.0
+appVersion: "6.7"
