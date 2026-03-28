@@ -1,0 +1,35 @@
+{{- if .Values.cron.enabled }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "wordpress.fullname" . }}-cron
+  labels:
+    {{- include "wordpress.labels" . | nindent 4 }}
+    app.kubernetes.io/component: cron
+spec:
+  schedule: {{ .Values.cron.schedule | quote }}
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            {{- include "wordpress.selectorLabels" . | nindent 12 }}
+            app.kubernetes.io/component: cron
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: wp-cron
+              image: {{ .Values.wordpress.image }}
+              command: ["php", "/var/www/html/wp-cron.php"]
+              envFrom:
+                - secretRef:
+                    name: {{ include "wordpress.fullname" . }}-credentials
+              volumeMounts:
+                - name: wp-content
+                  mountPath: /var/www/html/wp-content
+          volumes:
+            - name: wp-content
+              persistentVolumeClaim:
+                claimName: {{ include "wordpress.fullname" . }}-wp-content
+{{- end }}

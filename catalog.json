@@ -1,0 +1,8 @@
+{
+  "version": "1",
+  "name": "Official Application Catalog",
+  "description": "Managed application stacks for the K8s Hosting Platform. Each application is a self-contained Helm chart with auto-configured database, ingress, and storage.",
+  "applications": [
+    "wordpress"
+  ]
+}

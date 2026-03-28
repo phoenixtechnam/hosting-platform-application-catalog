@@ -1,0 +1,74 @@
+name: Validate Catalog
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate-manifests:
+    name: Validate manifests & chart structure
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Validate all manifests against schema
+        run: npm run validate
+
+  helm-lint:
+    name: Helm lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: v3.16.0
+
+      - name: Lint all Helm charts
+        run: |
+          error=0
+          for dir in */chart; do
+            app=$(dirname "$dir")
+            echo "⎈ Linting $app..."
+            if helm lint "$dir" --strict 2>&1; then
+              echo "  ✓ $app chart is valid"
+            else
+              echo "  ✗ $app chart has lint errors"
+              error=1
+            fi
+          done
+          exit $error
+
+  json-format:
+    name: Check JSON formatting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check JSON formatting
+        run: |
+          error=0
+          for f in catalog.json */manifest.json; do
+            if [ -f "$f" ]; then
+              if ! python3 -m json.tool "$f" > /tmp/formatted.json 2>/dev/null; then
+                echo "✗ $f is not valid JSON"
+                error=1
+              elif ! diff -q "$f" /tmp/formatted.json > /dev/null 2>&1; then
+                echo "✗ $f is not formatted (run: python3 -m json.tool $f > tmp && mv tmp $f)"
+                error=1
+              else
+                echo "✓ $f"
+              fi
+            fi
+          done
+          exit $error

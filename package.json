@@ -1,0 +1,15 @@
+{
+  "name": "hosting-platform-application-catalog",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Managed application catalog for the K8s Hosting Platform",
+  "scripts": {
+    "validate": "node scripts/validate.mjs",
+    "lint": "node scripts/validate.mjs"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.0",
+    "ajv-formats": "^3.0.0"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "name": "WordPress",
+  "code": "wordpress",
+  "version": "6.x",
+  "description": "Managed WordPress with auto-configured database, WP-CLI, and scheduled updates",
+  "category": "cms",
+  "min_plan": "starter",
+  "tenancy": ["single-tenant"],
+  "components": [
+    {
+      "name": "wordpress",
+      "type": "deployment",
+      "image": "wordpress:php8.4-apache",
+      "ports": [{ "port": 80, "protocol": "TCP", "ingress": true }]
+    },
+    {
+      "name": "mariadb",
+      "type": "statefulset",
+      "image": "mariadb:10.6",
+      "ports": [{ "port": 3306, "protocol": "TCP", "ingress": false }]
+    },
+    {
+      "name": "wp-cron",
+      "type": "cronjob",
+      "image": "wordpress:php8.4-apache",
+      "schedule": "*/15 * * * *",
+      "optional": true
+    }
+  ],
+  "networking": {
+    "ingress_ports": [
+      { "port": 443, "protocol": "TCP", "tls": true, "description": "Web UI" }
+    ],
+    "host_ports": [],
+    "websocket": false
+  },
+  "volumes": [
+    { "name": "wp-content", "mount_path": "/var/www/html/wp-content", "default_size": "5Gi", "description": "Themes, plugins, uploads" },
+    { "name": "db-data", "mount_path": "/var/lib/mysql", "default_size": "5Gi", "description": "MariaDB data" }
+  ],
+  "resources": {
+    "default": { "cpu": "0.50", "memory": "512Mi", "storage": "10Gi" },
+    "minimum": { "cpu": "0.25", "memory": "256Mi", "storage": "5Gi" }
+  },
+  "health_check": {
+    "path": "/wp-login.php",
+    "port": 80,
+    "initial_delay_seconds": 30,
+    "period_seconds": 15
+  },
+  "parameters": [
+    { "key": "wordpress.siteTitle", "label": "Site Title", "type": "string", "default": "My WordPress Site", "required": true },
+    { "key": "wordpress.adminUser", "label": "Admin Username", "type": "string", "default": "admin", "required": true },
+    { "key": "wordpress.adminPassword", "label": "Admin Password", "type": "secret", "required": true },
+    { "key": "wordpress.adminEmail", "label": "Admin Email", "type": "string", "required": true },
+    { "key": "ingress.domain", "label": "Domain", "type": "string", "required": true },
+    { "key": "resources.cpuLimit", "label": "CPU Limit", "type": "string", "default": "1.00" },
+    { "key": "resources.memoryLimit", "label": "Memory Limit", "type": "string", "default": "512Mi" }
+  ],
+  "tags": ["cms", "wordpress", "php", "blog"]
+}
