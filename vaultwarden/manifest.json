@@ -1,0 +1,48 @@
+{
+  "name": "Vaultwarden",
+  "code": "vaultwarden",
+  "version": "latest",
+  "description": "Managed Vaultwarden password manager (Bitwarden-compatible) with embedded SQLite",
+  "category": "security",
+  "min_plan": "starter",
+  "tenancy": ["multi-tenant"],
+  "components": [
+    {
+      "name": "vaultwarden",
+      "type": "deployment",
+      "image": "vaultwarden/server:latest",
+      "ports": [{ "port": 80, "protocol": "TCP", "ingress": true }]
+    }
+  ],
+  "networking": {
+    "ingress_ports": [
+      { "port": 443, "protocol": "TCP", "tls": true, "description": "Web vault and API" }
+    ],
+    "host_ports": [],
+    "websocket": false
+  },
+  "volumes": [
+    { "name": "vw-data", "mount_path": "/data", "default_size": "1Gi", "description": "Vaultwarden data and SQLite database" }
+  ],
+  "resources": {
+    "default": { "cpu": "0.25", "memory": "128Mi", "storage": "1Gi" },
+    "minimum": { "cpu": "0.10", "memory": "64Mi", "storage": "1Gi" }
+  },
+  "health_check": {
+    "path": "/alive",
+    "port": 80,
+    "initial_delay_seconds": 10,
+    "period_seconds": 30
+  },
+  "parameters": [
+    { "key": "ingress.domain", "label": "Domain", "type": "string", "required": true },
+    { "key": "vaultwarden.signupsAllowed", "label": "Allow Signups", "type": "boolean", "default": false },
+    { "key": "vaultwarden.adminToken", "label": "Admin Token", "type": "secret", "required": true },
+    { "key": "vwData.storageSize", "label": "Data Storage Size", "type": "string", "default": "1Gi" },
+    { "key": "smtp.host", "label": "SMTP Server", "type": "string", "required": false },
+    { "key": "smtp.port", "label": "SMTP Port", "type": "integer", "default": 587, "required": false },
+    { "key": "smtp.username", "label": "SMTP Username", "type": "string", "required": false },
+    { "key": "smtp.password", "label": "SMTP Password", "type": "secret", "required": false }
+  ],
+  "tags": ["passwords", "bitwarden", "security", "vaultwarden"]
+}

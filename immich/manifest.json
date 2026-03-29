@@ -1,0 +1,66 @@
+{
+  "name": "Immich",
+  "code": "immich",
+  "version": "release",
+  "description": "Managed Immich self-hosted photo and video management with machine learning",
+  "category": "media",
+  "min_plan": "premium",
+  "tenancy": ["single-tenant"],
+  "components": [
+    {
+      "name": "immich-server",
+      "type": "deployment",
+      "image": "ghcr.io/immich-app/immich-server:release",
+      "ports": [{ "port": 2283, "protocol": "TCP", "ingress": true }]
+    },
+    {
+      "name": "immich-ml",
+      "type": "deployment",
+      "image": "ghcr.io/immich-app/immich-machine-learning:release",
+      "ports": [{ "port": 3003, "protocol": "TCP", "ingress": false }]
+    },
+    {
+      "name": "postgresql",
+      "type": "statefulset",
+      "image": "tensorchord/pgvecto-rs:pg16-v0.2.1",
+      "ports": [{ "port": 5432, "protocol": "TCP", "ingress": false }]
+    },
+    {
+      "name": "redis",
+      "type": "deployment",
+      "image": "redis:7-alpine",
+      "ports": [{ "port": 6379, "protocol": "TCP", "ingress": false }]
+    }
+  ],
+  "networking": {
+    "ingress_ports": [
+      { "port": 443, "protocol": "TCP", "tls": true, "description": "Web UI" }
+    ],
+    "host_ports": [],
+    "websocket": true
+  },
+  "volumes": [
+    { "name": "upload-data", "mount_path": "/usr/src/app/upload", "default_size": "100Gi", "description": "Immich photo and video uploads" },
+    { "name": "db-data", "mount_path": "/var/lib/postgresql/data", "default_size": "10Gi", "description": "PostgreSQL data directory" },
+    { "name": "ml-cache", "mount_path": "/cache", "default_size": "5Gi", "description": "Machine learning model cache" }
+  ],
+  "resources": {
+    "default": { "cpu": "2.00", "memory": "4Gi", "storage": "115Gi" },
+    "minimum": { "cpu": "1.00", "memory": "2Gi", "storage": "50Gi" }
+  },
+  "health_check": {
+    "path": "/api/server/ping",
+    "port": 2283,
+    "initial_delay_seconds": 30,
+    "period_seconds": 30
+  },
+  "parameters": [
+    { "key": "ingress.domain", "label": "Domain", "type": "string", "required": true },
+    { "key": "postgresql.password", "label": "Database Password", "type": "secret", "required": true },
+    { "key": "immichMl.url", "label": "Machine Learning URL", "type": "string", "default": "http://immich-ml:3003", "required": false },
+    { "key": "uploadData.storageSize", "label": "Upload Storage Size", "type": "string", "default": "100Gi" },
+    { "key": "postgresql.storageSize", "label": "Database Storage Size", "type": "string", "default": "10Gi" },
+    { "key": "mlCache.storageSize", "label": "ML Cache Storage Size", "type": "string", "default": "5Gi" }
+  ],
+  "tags": ["photos", "media", "immich", "machine-learning"]
+}

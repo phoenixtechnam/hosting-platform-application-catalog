@@ -7,6 +7,22 @@
     "coturn",
     "nextcloud",
     "jitsi",
-    "moodle-bitnami"
+    "moodle-bitnami",
+    "prestashop",
+    "matomo",
+    "vaultwarden",
+    "gitea",
+    "bookstack",
+    "n8n",
+    "uptime-kuma",
+    "discourse",
+    "plausible",
+    "wiki-js",
+    "immich",
+    "rocketchat",
+    "strapi",
+    "directus",
+    "paperless-ngx",
+    "invoiceninja"
   ]
 }

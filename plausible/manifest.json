@@ -1,0 +1,63 @@
+{
+  "name": "Plausible Analytics",
+  "code": "plausible",
+  "version": "2.0",
+  "description": "Privacy-friendly web analytics with PostgreSQL and ClickHouse backends",
+  "category": "analytics",
+  "min_plan": "starter",
+  "tenancy": ["multi-tenant"],
+  "components": [
+    {
+      "name": "plausible",
+      "type": "deployment",
+      "image": "ghcr.io/plausible/community-edition:v2",
+      "ports": [{ "port": 8000, "protocol": "TCP", "ingress": true }]
+    },
+    {
+      "name": "postgresql",
+      "type": "statefulset",
+      "image": "postgres:16-alpine",
+      "ports": [{ "port": 5432, "protocol": "TCP", "ingress": false }]
+    },
+    {
+      "name": "clickhouse",
+      "type": "statefulset",
+      "image": "clickhouse/clickhouse-server:24",
+      "ports": [{ "port": 8123, "protocol": "TCP", "ingress": false }]
+    }
+  ],
+  "networking": {
+    "ingress_ports": [
+      { "port": 443, "protocol": "TCP", "tls": true, "description": "Web UI and API" }
+    ],
+    "host_ports": [],
+    "websocket": false
+  },
+  "volumes": [
+    { "name": "db-data", "mount_path": "/var/lib/postgresql/data", "default_size": "5Gi", "description": "PostgreSQL data directory" },
+    { "name": "ch-data", "mount_path": "/var/lib/clickhouse", "default_size": "10Gi", "description": "ClickHouse data directory" }
+  ],
+  "resources": {
+    "default": { "cpu": "0.50", "memory": "512Mi", "storage": "15Gi" },
+    "minimum": { "cpu": "0.25", "memory": "256Mi", "storage": "5Gi" }
+  },
+  "health_check": {
+    "path": "/api/health",
+    "port": 8000,
+    "initial_delay_seconds": 30,
+    "period_seconds": 30
+  },
+  "parameters": [
+    { "key": "ingress.domain", "label": "Domain", "type": "string", "required": true },
+    { "key": "plausible.adminEmail", "label": "Admin Email", "type": "string", "required": true },
+    { "key": "plausible.adminPassword", "label": "Admin Password", "type": "secret", "required": true },
+    { "key": "plausible.secretKeyBase", "label": "Secret Key Base", "type": "secret", "required": true },
+    { "key": "postgresql.storageSize", "label": "Database Storage Size", "type": "string", "default": "5Gi" },
+    { "key": "clickhouse.storageSize", "label": "ClickHouse Storage Size", "type": "string", "default": "10Gi" },
+    { "key": "smtp.host", "label": "SMTP Server", "type": "string", "required": false },
+    { "key": "smtp.port", "label": "SMTP Port", "type": "integer", "default": 587, "required": false },
+    { "key": "smtp.username", "label": "SMTP Username", "type": "string", "required": false },
+    { "key": "smtp.password", "label": "SMTP Password", "type": "secret", "required": false }
+  ],
+  "tags": ["analytics", "privacy", "plausible", "gdpr"]
+}

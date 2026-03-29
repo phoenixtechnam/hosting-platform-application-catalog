@@ -58,6 +58,13 @@
         "identity",
         "ecommerce",
         "media",
+        "documentation",
+        "automation",
+        "monitoring",
+        "community",
+        "security",
+        "devtools",
+        "billing",
         "other"
       ]
     },

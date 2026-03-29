@@ -1,0 +1,58 @@
+{
+  "name": "n8n",
+  "code": "n8n",
+  "version": "latest",
+  "description": "Managed n8n workflow automation platform with PostgreSQL",
+  "category": "automation",
+  "min_plan": "business",
+  "tenancy": ["single-tenant"],
+  "components": [
+    {
+      "name": "n8n",
+      "type": "deployment",
+      "image": "n8nio/n8n:latest",
+      "ports": [{ "port": 5678, "protocol": "TCP", "ingress": true }]
+    },
+    {
+      "name": "postgresql",
+      "type": "statefulset",
+      "image": "postgres:16-alpine",
+      "ports": [{ "port": 5432, "protocol": "TCP", "ingress": false }]
+    }
+  ],
+  "networking": {
+    "ingress_ports": [
+      { "port": 443, "protocol": "TCP", "tls": true, "description": "Web UI and webhook endpoints" }
+    ],
+    "host_ports": [],
+    "websocket": false
+  },
+  "volumes": [
+    { "name": "n8n-data", "mount_path": "/home/node/.n8n", "default_size": "5Gi", "description": "n8n workflow data and credentials" },
+    { "name": "db-data", "mount_path": "/var/lib/postgresql/data", "default_size": "5Gi", "description": "PostgreSQL data directory" }
+  ],
+  "resources": {
+    "default": { "cpu": "0.50", "memory": "512Mi", "storage": "10Gi" },
+    "minimum": { "cpu": "0.25", "memory": "256Mi", "storage": "5Gi" }
+  },
+  "health_check": {
+    "path": "/healthz",
+    "port": 5678,
+    "initial_delay_seconds": 30,
+    "period_seconds": 30
+  },
+  "parameters": [
+    { "key": "ingress.domain", "label": "Domain", "type": "string", "required": true },
+    { "key": "n8n.webhookUrl", "label": "Webhook URL", "type": "string", "required": true },
+    { "key": "n8n.basicAuthUser", "label": "Basic Auth Username", "type": "string", "required": true },
+    { "key": "n8n.basicAuthPassword", "label": "Basic Auth Password", "type": "secret", "required": true },
+    { "key": "n8n.encryptionKey", "label": "Encryption Key", "type": "secret", "required": true },
+    { "key": "postgresql.storageSize", "label": "Database Storage Size", "type": "string", "default": "5Gi" },
+    { "key": "n8nData.storageSize", "label": "Application Storage Size", "type": "string", "default": "5Gi" },
+    { "key": "smtp.host", "label": "SMTP Server", "type": "string", "required": false },
+    { "key": "smtp.port", "label": "SMTP Port", "type": "integer", "default": 587, "required": false },
+    { "key": "smtp.username", "label": "SMTP Username", "type": "string", "required": false },
+    { "key": "smtp.password", "label": "SMTP Password", "type": "secret", "required": false }
+  ],
+  "tags": ["automation", "workflow", "n8n", "integration"]
+}

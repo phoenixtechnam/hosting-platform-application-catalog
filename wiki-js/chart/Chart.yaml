@@ -1,0 +1,6 @@
+apiVersion: v2
+name: wiki-js
+description: Modern wiki platform with PostgreSQL backend and markdown support
+type: application
+version: 1.0.0
+appVersion: "2.5"

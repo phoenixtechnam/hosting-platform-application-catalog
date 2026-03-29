@@ -1,0 +1,145 @@
+{
+  "name": "Invoice Ninja",
+  "code": "invoiceninja",
+  "version": "5",
+  "description": "Open-source invoicing, payments, expenses, and time-tracking platform built for freelancers and small businesses.",
+  "category": "ecommerce",
+  "min_plan": "starter",
+  "tenancy": ["single-tenant"],
+  "components": [
+    {
+      "name": "invoiceninja",
+      "type": "deployment",
+      "image": "invoiceninja/invoiceninja:5",
+      "ports": [
+        { "port": 80, "protocol": "TCP", "ingress": true }
+      ]
+    },
+    {
+      "name": "mariadb",
+      "type": "statefulset",
+      "image": "mariadb:10.11",
+      "ports": [
+        { "port": 3306, "protocol": "TCP" }
+      ]
+    }
+  ],
+  "networking": {
+    "ingress_ports": [
+      {
+        "port": 80,
+        "protocol": "TCP",
+        "tls": true,
+        "description": "Invoice Ninja web interface"
+      }
+    ]
+  },
+  "volumes": [
+    {
+      "name": "in-public",
+      "mount_path": "/var/www/app/public",
+      "default_size": "5Gi",
+      "description": "Public assets and generated files"
+    },
+    {
+      "name": "in-storage",
+      "mount_path": "/var/www/app/storage",
+      "default_size": "5Gi",
+      "description": "Application storage (invoices, logs, cache)"
+    },
+    {
+      "name": "db-data",
+      "mount_path": "/var/lib/mysql",
+      "default_size": "5Gi",
+      "description": "MariaDB database storage"
+    }
+  ],
+  "resources": {
+    "default": {
+      "cpu": "0.50",
+      "memory": "512Mi",
+      "storage": "15Gi"
+    },
+    "minimum": {
+      "cpu": "0.25",
+      "memory": "256Mi",
+      "storage": "5Gi"
+    }
+  },
+  "health_check": {
+    "path": "/health",
+    "port": 80,
+    "initial_delay_seconds": 60,
+    "period_seconds": 10
+  },
+  "parameters": [
+    {
+      "key": "domain",
+      "label": "Domain",
+      "type": "string",
+      "required": true,
+      "description": "Fully qualified domain name for Invoice Ninja"
+    },
+    {
+      "key": "app.url",
+      "label": "Application URL",
+      "type": "string",
+      "required": true,
+      "description": "Full URL including protocol (e.g., https://invoices.example.com)"
+    },
+    {
+      "key": "app.key",
+      "label": "Application Key",
+      "type": "secret",
+      "required": true,
+      "description": "Laravel application encryption key (base64:...)"
+    },
+    {
+      "key": "admin.email",
+      "label": "Admin Email",
+      "type": "string",
+      "required": true,
+      "description": "Initial admin user email address"
+    },
+    {
+      "key": "admin.password",
+      "label": "Admin Password",
+      "type": "secret",
+      "required": true,
+      "description": "Initial admin user password"
+    },
+    {
+      "key": "db.password",
+      "label": "Database Password",
+      "type": "secret",
+      "required": true,
+      "description": "MariaDB database password"
+    },
+    {
+      "key": "smtp.host",
+      "label": "SMTP Host",
+      "type": "string",
+      "description": "SMTP server hostname"
+    },
+    {
+      "key": "smtp.port",
+      "label": "SMTP Port",
+      "type": "integer",
+      "default": 587,
+      "description": "SMTP server port"
+    },
+    {
+      "key": "smtp.username",
+      "label": "SMTP Username",
+      "type": "string",
+      "description": "SMTP authentication username"
+    },
+    {
+      "key": "smtp.password",
+      "label": "SMTP Password",
+      "type": "secret",
+      "description": "SMTP authentication password"
+    }
+  ],
+  "tags": ["invoicing", "billing", "invoiceninja", "accounting"]
+}

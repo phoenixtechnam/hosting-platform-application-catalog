@@ -1,0 +1,6 @@
+apiVersion: v2
+name: prestashop
+description: Managed PrestaShop e-commerce platform with MariaDB
+type: application
+version: 1.0.0
+appVersion: "8"
