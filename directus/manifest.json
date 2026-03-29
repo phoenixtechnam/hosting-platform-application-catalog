@@ -1,128 +1,128 @@
 {
-  "name": "Directus",
-  "code": "directus",
-  "version": "11",
-  "description": "Turn any SQL database into a modern admin dashboard and API — no coding required.",
-  "category": "cms",
-  "tenancy": [
-    "single-tenant"
-  ],
-  "components": [
-    {
-      "name": "directus",
-      "type": "deployment",
-      "image": "directus/directus:11",
-      "ports": [
-        {
-          "port": 8055,
-          "protocol": "TCP",
-          "ingress": true
-        }
-      ]
-    },
-    {
-      "name": "postgresql",
-      "type": "statefulset",
-      "image": "postgres:16-alpine",
-      "ports": [
-        {
-          "port": 5432,
-          "protocol": "TCP"
-        }
-      ]
-    }
-  ],
-  "networking": {
-    "ingress_ports": [
-      {
-        "port": 8055,
-        "protocol": "TCP",
-        "tls": true,
-        "description": "Directus HTTP API and admin dashboard"
-      }
+    "name": "Directus",
+    "code": "directus",
+    "version": "11",
+    "description": "Turn any SQL database into a modern admin dashboard and API \u2014 no coding required.",
+    "category": "cms",
+    "tenancy": [
+        "single-tenant"
     ],
-    "websocket": true
-  },
-  "volumes": [
-    {
-      "name": "directus-uploads",
-      "mount_path": "/directus/uploads",
-      "default_size": "10Gi",
-      "description": "Directus file uploads"
+    "components": [
+        {
+            "name": "directus",
+            "type": "deployment",
+            "image": "directus/directus:11",
+            "ports": [
+                {
+                    "port": 8055,
+                    "protocol": "TCP",
+                    "ingress": true
+                }
+            ]
+        },
+        {
+            "name": "postgresql",
+            "type": "statefulset",
+            "image": "postgres:16-alpine",
+            "ports": [
+                {
+                    "port": 5432,
+                    "protocol": "TCP"
+                }
+            ]
+        }
+    ],
+    "networking": {
+        "ingress_ports": [
+            {
+                "port": 8055,
+                "protocol": "TCP",
+                "tls": true,
+                "description": "Directus HTTP API and admin dashboard"
+            }
+        ],
+        "websocket": true
     },
-    {
-      "name": "directus-extensions",
-      "mount_path": "/directus/extensions",
-      "default_size": "1Gi",
-      "description": "Directus custom extensions"
+    "volumes": [
+        {
+            "name": "directus-uploads",
+            "mount_path": "/directus/uploads",
+            "default_size": "10Gi",
+            "description": "Directus file uploads"
+        },
+        {
+            "name": "directus-extensions",
+            "mount_path": "/directus/extensions",
+            "default_size": "1Gi",
+            "description": "Directus custom extensions"
+        },
+        {
+            "name": "directus-database",
+            "mount_path": "/var/lib/postgresql/data",
+            "default_size": "5Gi",
+            "description": "PostgreSQL database storage"
+        }
+    ],
+    "resources": {
+        "default": {
+            "cpu": "0.50",
+            "memory": "512Mi",
+            "storage": "16Gi"
+        },
+        "minimum": {
+            "cpu": "0.25",
+            "memory": "256Mi",
+            "storage": "6Gi"
+        }
     },
-    {
-      "name": "db-data",
-      "mount_path": "/var/lib/postgresql/data",
-      "default_size": "5Gi",
-      "description": "PostgreSQL database storage"
-    }
-  ],
-  "resources": {
-    "default": {
-      "cpu": "0.50",
-      "memory": "512Mi",
-      "storage": "16Gi"
+    "health_check": {
+        "path": "/server/health",
+        "port": 8055,
+        "initial_delay_seconds": 30,
+        "period_seconds": 10
     },
-    "minimum": {
-      "cpu": "0.25",
-      "memory": "256Mi",
-      "storage": "6Gi"
-    }
-  },
-  "health_check": {
-    "path": "/server/health",
-    "port": 8055,
-    "initial_delay_seconds": 30,
-    "period_seconds": 10
-  },
-  "parameters": [
-    {
-      "key": "domain",
-      "label": "Domain",
-      "type": "string",
-      "required": true,
-      "description": "Fully qualified domain name for Directus"
-    },
-    {
-      "key": "admin.email",
-      "label": "Admin Email",
-      "type": "string",
-      "required": true,
-      "description": "Initial admin user email address"
-    },
-    {
-      "key": "admin.password",
-      "label": "Admin Password",
-      "type": "secret",
-      "required": true,
-      "description": "Initial admin user password"
-    },
-    {
-      "key": "app.secret",
-      "label": "Application Secret",
-      "type": "secret",
-      "required": true,
-      "description": "Secret used for signing tokens and encrypting data"
-    },
-    {
-      "key": "db.password",
-      "label": "Database Password",
-      "type": "secret",
-      "required": true,
-      "description": "PostgreSQL database password"
-    }
-  ],
-  "tags": [
-    "cms",
-    "headless",
-    "directus",
-    "api",
-    "dashboard"
-  ]
+    "parameters": [
+        {
+            "key": "domain",
+            "label": "Domain",
+            "type": "string",
+            "required": true,
+            "description": "Fully qualified domain name for Directus"
+        },
+        {
+            "key": "admin.email",
+            "label": "Admin Email",
+            "type": "string",
+            "required": true,
+            "description": "Initial admin user email address"
+        },
+        {
+            "key": "admin.password",
+            "label": "Admin Password",
+            "type": "secret",
+            "required": true,
+            "description": "Initial admin user password"
+        },
+        {
+            "key": "app.secret",
+            "label": "Application Secret",
+            "type": "secret",
+            "required": true,
+            "description": "Secret used for signing tokens and encrypting data"
+        },
+        {
+            "key": "db.password",
+            "label": "Database Password",
+            "type": "secret",
+            "required": true,
+            "description": "PostgreSQL database password"
+        }
+    ],
+    "tags": [
+        "cms",
+        "headless",
+        "directus",
+        "api",
+        "dashboard"
+    ]
 }

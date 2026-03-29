@@ -1,162 +1,162 @@
 {
-  "name": "Discourse",
-  "code": "discourse",
-  "version": "3",
-  "description": "Build an online community with modern discussion forums, categories, and user engagement features.",
-  "category": "community",
-  "tenancy": [
-    "single-tenant"
-  ],
-  "components": [
-    {
-      "name": "discourse",
-      "type": "deployment",
-      "image": "bitnami/discourse:3",
-      "ports": [
-        {
-          "port": 3000,
-          "protocol": "TCP",
-          "ingress": true
-        }
-      ]
-    },
-    {
-      "name": "postgresql",
-      "type": "statefulset",
-      "image": "postgres:16-alpine",
-      "ports": [
-        {
-          "port": 5432,
-          "protocol": "TCP",
-          "ingress": false
-        }
-      ]
-    },
-    {
-      "name": "redis",
-      "type": "deployment",
-      "image": "redis:7-alpine",
-      "ports": [
-        {
-          "port": 6379,
-          "protocol": "TCP",
-          "ingress": false
-        }
-      ]
-    }
-  ],
-  "networking": {
-    "ingress_ports": [
-      {
-        "port": 443,
-        "protocol": "TCP",
-        "tls": true,
-        "description": "Web UI"
-      }
+    "name": "Discourse",
+    "code": "discourse",
+    "version": "3",
+    "description": "Build an online community with modern discussion forums, categories, and user engagement features.",
+    "category": "community",
+    "tenancy": [
+        "single-tenant"
     ],
-    "host_ports": [],
-    "websocket": false
-  },
-  "volumes": [
-    {
-      "name": "discourse-data",
-      "mount_path": "/shared",
-      "default_size": "20Gi",
-      "description": "Discourse shared data and uploads"
+    "components": [
+        {
+            "name": "discourse",
+            "type": "deployment",
+            "image": "bitnami/discourse:3",
+            "ports": [
+                {
+                    "port": 3000,
+                    "protocol": "TCP",
+                    "ingress": true
+                }
+            ]
+        },
+        {
+            "name": "postgresql",
+            "type": "statefulset",
+            "image": "postgres:16-alpine",
+            "ports": [
+                {
+                    "port": 5432,
+                    "protocol": "TCP",
+                    "ingress": false
+                }
+            ]
+        },
+        {
+            "name": "redis",
+            "type": "deployment",
+            "image": "redis:7-alpine",
+            "ports": [
+                {
+                    "port": 6379,
+                    "protocol": "TCP",
+                    "ingress": false
+                }
+            ]
+        }
+    ],
+    "networking": {
+        "ingress_ports": [
+            {
+                "port": 443,
+                "protocol": "TCP",
+                "tls": true,
+                "description": "Web UI"
+            }
+        ],
+        "host_ports": [],
+        "websocket": false
     },
-    {
-      "name": "db-data",
-      "mount_path": "/var/lib/postgresql/data",
-      "default_size": "10Gi",
-      "description": "PostgreSQL data directory"
-    }
-  ],
-  "resources": {
-    "default": {
-      "cpu": "1.00",
-      "memory": "2Gi",
-      "storage": "30Gi"
+    "volumes": [
+        {
+            "name": "discourse-data",
+            "mount_path": "/shared",
+            "default_size": "20Gi",
+            "description": "Discourse shared data and uploads"
+        },
+        {
+            "name": "discourse-database",
+            "mount_path": "/var/lib/postgresql/data",
+            "default_size": "10Gi",
+            "description": "PostgreSQL data directory"
+        }
+    ],
+    "resources": {
+        "default": {
+            "cpu": "1.00",
+            "memory": "2Gi",
+            "storage": "30Gi"
+        },
+        "minimum": {
+            "cpu": "0.50",
+            "memory": "1Gi",
+            "storage": "15Gi"
+        }
     },
-    "minimum": {
-      "cpu": "0.50",
-      "memory": "1Gi",
-      "storage": "15Gi"
-    }
-  },
-  "health_check": {
-    "path": "/srv/status",
-    "port": 3000,
-    "initial_delay_seconds": 120,
-    "period_seconds": 30
-  },
-  "parameters": [
-    {
-      "key": "ingress.domain",
-      "label": "Domain",
-      "type": "string",
-      "required": true
+    "health_check": {
+        "path": "/srv/status",
+        "port": 3000,
+        "initial_delay_seconds": 120,
+        "period_seconds": 30
     },
-    {
-      "key": "discourse.adminEmail",
-      "label": "Admin Email",
-      "type": "string",
-      "required": true
-    },
-    {
-      "key": "discourse.adminPassword",
-      "label": "Admin Password",
-      "type": "secret",
-      "required": true
-    },
-    {
-      "key": "discourse.siteName",
-      "label": "Site Name",
-      "type": "string",
-      "default": "My Discourse Forum",
-      "required": true
-    },
-    {
-      "key": "postgresql.storageSize",
-      "label": "Database Storage Size",
-      "type": "string",
-      "default": "10Gi"
-    },
-    {
-      "key": "discourseData.storageSize",
-      "label": "Application Storage Size",
-      "type": "string",
-      "default": "20Gi"
-    },
-    {
-      "key": "smtp.host",
-      "label": "SMTP Server",
-      "type": "string",
-      "required": true
-    },
-    {
-      "key": "smtp.port",
-      "label": "SMTP Port",
-      "type": "integer",
-      "default": 587,
-      "required": true
-    },
-    {
-      "key": "smtp.username",
-      "label": "SMTP Username",
-      "type": "string",
-      "required": true
-    },
-    {
-      "key": "smtp.password",
-      "label": "SMTP Password",
-      "type": "secret",
-      "required": true
-    }
-  ],
-  "tags": [
-    "forum",
-    "community",
-    "discourse",
-    "discussion"
-  ]
+    "parameters": [
+        {
+            "key": "ingress.domain",
+            "label": "Domain",
+            "type": "string",
+            "required": true
+        },
+        {
+            "key": "discourse.adminEmail",
+            "label": "Admin Email",
+            "type": "string",
+            "required": true
+        },
+        {
+            "key": "discourse.adminPassword",
+            "label": "Admin Password",
+            "type": "secret",
+            "required": true
+        },
+        {
+            "key": "discourse.siteName",
+            "label": "Site Name",
+            "type": "string",
+            "default": "My Discourse Forum",
+            "required": true
+        },
+        {
+            "key": "postgresql.storageSize",
+            "label": "Database Storage Size",
+            "type": "string",
+            "default": "10Gi"
+        },
+        {
+            "key": "discourseData.storageSize",
+            "label": "Application Storage Size",
+            "type": "string",
+            "default": "20Gi"
+        },
+        {
+            "key": "smtp.host",
+            "label": "SMTP Server",
+            "type": "string",
+            "required": true
+        },
+        {
+            "key": "smtp.port",
+            "label": "SMTP Port",
+            "type": "integer",
+            "default": 587,
+            "required": true
+        },
+        {
+            "key": "smtp.username",
+            "label": "SMTP Username",
+            "type": "string",
+            "required": true
+        },
+        {
+            "key": "smtp.password",
+            "label": "SMTP Password",
+            "type": "secret",
+            "required": true
+        }
+    ],
+    "tags": [
+        "forum",
+        "community",
+        "discourse",
+        "discussion"
+    ]
 }

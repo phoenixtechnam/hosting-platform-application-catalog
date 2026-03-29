@@ -1,127 +1,127 @@
 {
-  "name": "Strapi CMS",
-  "code": "strapi",
-  "version": "5",
-  "description": "Build and manage your content with a flexible headless CMS that powers websites, apps, and more.",
-  "category": "cms",
-  "tenancy": [
-    "single-tenant"
-  ],
-  "components": [
-    {
-      "name": "strapi",
-      "type": "deployment",
-      "image": "node:20-alpine",
-      "ports": [
+    "name": "Strapi CMS",
+    "code": "strapi",
+    "version": "5",
+    "description": "Build and manage your content with a flexible headless CMS that powers websites, apps, and more.",
+    "category": "cms",
+    "tenancy": [
+        "single-tenant"
+    ],
+    "components": [
         {
-          "port": 1337,
-          "protocol": "TCP",
-          "ingress": true
+            "name": "strapi",
+            "type": "deployment",
+            "image": "node:20-alpine",
+            "ports": [
+                {
+                    "port": 1337,
+                    "protocol": "TCP",
+                    "ingress": true
+                }
+            ]
+        },
+        {
+            "name": "postgresql",
+            "type": "statefulset",
+            "image": "postgres:16-alpine",
+            "ports": [
+                {
+                    "port": 5432,
+                    "protocol": "TCP"
+                }
+            ]
         }
-      ]
+    ],
+    "networking": {
+        "ingress_ports": [
+            {
+                "port": 1337,
+                "protocol": "TCP",
+                "tls": true,
+                "description": "Strapi HTTP API and admin panel"
+            }
+        ]
     },
-    {
-      "name": "postgresql",
-      "type": "statefulset",
-      "image": "postgres:16-alpine",
-      "ports": [
+    "volumes": [
         {
-          "port": 5432,
-          "protocol": "TCP"
+            "name": "strapi-data",
+            "mount_path": "/opt/app",
+            "default_size": "5Gi",
+            "description": "Strapi application data"
+        },
+        {
+            "name": "strapi-database",
+            "mount_path": "/var/lib/postgresql/data",
+            "default_size": "5Gi",
+            "description": "PostgreSQL database storage"
         }
-      ]
-    }
-  ],
-  "networking": {
-    "ingress_ports": [
-      {
+    ],
+    "resources": {
+        "default": {
+            "cpu": "0.50",
+            "memory": "512Mi",
+            "storage": "10Gi"
+        },
+        "minimum": {
+            "cpu": "0.25",
+            "memory": "256Mi",
+            "storage": "5Gi"
+        }
+    },
+    "health_check": {
+        "path": "/_health",
         "port": 1337,
-        "protocol": "TCP",
-        "tls": true,
-        "description": "Strapi HTTP API and admin panel"
-      }
+        "initial_delay_seconds": 30,
+        "period_seconds": 10
+    },
+    "parameters": [
+        {
+            "key": "domain",
+            "label": "Domain",
+            "type": "string",
+            "required": true,
+            "description": "Fully qualified domain name for Strapi"
+        },
+        {
+            "key": "admin.jwtSecret",
+            "label": "Admin JWT Secret",
+            "type": "secret",
+            "required": true,
+            "description": "Secret key for signing admin JWT tokens"
+        },
+        {
+            "key": "app.keys",
+            "label": "App Keys",
+            "type": "secret",
+            "required": true,
+            "description": "Comma-separated application keys for session encryption"
+        },
+        {
+            "key": "app.apiTokenSalt",
+            "label": "API Token Salt",
+            "type": "secret",
+            "required": true,
+            "description": "Salt used for generating API tokens"
+        },
+        {
+            "key": "app.transferTokenSalt",
+            "label": "Transfer Token Salt",
+            "type": "secret",
+            "required": true,
+            "description": "Salt used for generating transfer tokens"
+        },
+        {
+            "key": "db.password",
+            "label": "Database Password",
+            "type": "secret",
+            "required": true,
+            "description": "PostgreSQL database password"
+        }
+    ],
+    "tags": [
+        "cms",
+        "headless",
+        "strapi",
+        "api"
     ]
-  },
-  "volumes": [
-    {
-      "name": "strapi-data",
-      "mount_path": "/opt/app",
-      "default_size": "5Gi",
-      "description": "Strapi application data"
-    },
-    {
-      "name": "db-data",
-      "mount_path": "/var/lib/postgresql/data",
-      "default_size": "5Gi",
-      "description": "PostgreSQL database storage"
-    }
-  ],
-  "resources": {
-    "default": {
-      "cpu": "0.50",
-      "memory": "512Mi",
-      "storage": "10Gi"
-    },
-    "minimum": {
-      "cpu": "0.25",
-      "memory": "256Mi",
-      "storage": "5Gi"
-    }
-  },
-  "health_check": {
-    "path": "/_health",
-    "port": 1337,
-    "initial_delay_seconds": 30,
-    "period_seconds": 10
-  },
-  "parameters": [
-    {
-      "key": "domain",
-      "label": "Domain",
-      "type": "string",
-      "required": true,
-      "description": "Fully qualified domain name for Strapi"
-    },
-    {
-      "key": "admin.jwtSecret",
-      "label": "Admin JWT Secret",
-      "type": "secret",
-      "required": true,
-      "description": "Secret key for signing admin JWT tokens"
-    },
-    {
-      "key": "app.keys",
-      "label": "App Keys",
-      "type": "secret",
-      "required": true,
-      "description": "Comma-separated application keys for session encryption"
-    },
-    {
-      "key": "app.apiTokenSalt",
-      "label": "API Token Salt",
-      "type": "secret",
-      "required": true,
-      "description": "Salt used for generating API tokens"
-    },
-    {
-      "key": "app.transferTokenSalt",
-      "label": "Transfer Token Salt",
-      "type": "secret",
-      "required": true,
-      "description": "Salt used for generating transfer tokens"
-    },
-    {
-      "key": "db.password",
-      "label": "Database Password",
-      "type": "secret",
-      "required": true,
-      "description": "PostgreSQL database password"
-    }
-  ],
-  "tags": [
-    "cms",
-    "headless",
-    "strapi",
-    "api"
-  ]
 }

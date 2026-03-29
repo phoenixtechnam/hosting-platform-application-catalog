@@ -1,182 +1,182 @@
 {
-  "name": "Paperless-ngx",
-  "code": "paperless-ngx",
-  "version": "2",
-  "description": "Go paperless — scan, tag, and search all your documents from one organized digital archive.",
-  "category": "productivity",
-  "tenancy": [
-    "single-tenant"
-  ],
-  "components": [
-    {
-      "name": "paperless",
-      "type": "deployment",
-      "image": "ghcr.io/paperless-ngx/paperless-ngx:latest",
-      "ports": [
+    "name": "Paperless-ngx",
+    "code": "paperless-ngx",
+    "version": "2",
+    "description": "Go paperless \u2014 scan, tag, and search all your documents from one organized digital archive.",
+    "category": "productivity",
+    "tenancy": [
+        "single-tenant"
+    ],
+    "components": [
         {
-          "port": 8000,
-          "protocol": "TCP",
-          "ingress": true
+            "name": "paperless",
+            "type": "deployment",
+            "image": "ghcr.io/paperless-ngx/paperless-ngx:latest",
+            "ports": [
+                {
+                    "port": 8000,
+                    "protocol": "TCP",
+                    "ingress": true
+                }
+            ]
+        },
+        {
+            "name": "postgresql",
+            "type": "statefulset",
+            "image": "postgres:16-alpine",
+            "ports": [
+                {
+                    "port": 5432,
+                    "protocol": "TCP"
+                }
+            ]
+        },
+        {
+            "name": "redis",
+            "type": "deployment",
+            "image": "redis:7-alpine",
+            "ports": [
+                {
+                    "port": 6379,
+                    "protocol": "TCP"
+                }
+            ]
         }
-      ]
+    ],
+    "networking": {
+        "ingress_ports": [
+            {
+                "port": 8000,
+                "protocol": "TCP",
+                "tls": true,
+                "description": "Paperless-ngx web interface"
+            }
+        ]
     },
-    {
-      "name": "postgresql",
-      "type": "statefulset",
-      "image": "postgres:16-alpine",
-      "ports": [
+    "volumes": [
         {
-          "port": 5432,
-          "protocol": "TCP"
+            "name": "paperless-data",
+            "mount_path": "/usr/src/paperless/data",
+            "default_size": "5Gi",
+            "description": "Paperless application data and index"
+        },
+        {
+            "name": "paperless-media",
+            "mount_path": "/usr/src/paperless/media",
+            "default_size": "20Gi",
+            "description": "Stored and processed documents"
+        },
+        {
+            "name": "paperless-consume",
+            "mount_path": "/usr/src/paperless/consume",
+            "default_size": "5Gi",
+            "description": "Consumption directory for incoming documents"
+        },
+        {
+            "name": "paperless-database",
+            "mount_path": "/var/lib/postgresql/data",
+            "default_size": "5Gi",
+            "description": "PostgreSQL database storage"
         }
-      ]
+    ],
+    "resources": {
+        "default": {
+            "cpu": "1.00",
+            "memory": "1Gi",
+            "storage": "35Gi"
+        },
+        "minimum": {
+            "cpu": "0.50",
+            "memory": "512Mi",
+            "storage": "15Gi"
+        }
     },
-    {
-      "name": "redis",
-      "type": "deployment",
-      "image": "redis:7-alpine",
-      "ports": [
-        {
-          "port": 6379,
-          "protocol": "TCP"
-        }
-      ]
-    }
-  ],
-  "networking": {
-    "ingress_ports": [
-      {
+    "health_check": {
+        "path": "/",
         "port": 8000,
-        "protocol": "TCP",
-        "tls": true,
-        "description": "Paperless-ngx web interface"
-      }
+        "initial_delay_seconds": 60,
+        "period_seconds": 10
+    },
+    "parameters": [
+        {
+            "key": "domain",
+            "label": "Domain",
+            "type": "string",
+            "required": true,
+            "description": "Fully qualified domain name for Paperless-ngx"
+        },
+        {
+            "key": "admin.username",
+            "label": "Admin Username",
+            "type": "string",
+            "required": true,
+            "description": "Initial superuser username"
+        },
+        {
+            "key": "admin.password",
+            "label": "Admin Password",
+            "type": "secret",
+            "required": true,
+            "description": "Initial superuser password"
+        },
+        {
+            "key": "admin.email",
+            "label": "Admin Email",
+            "type": "string",
+            "required": true,
+            "description": "Initial superuser email address"
+        },
+        {
+            "key": "app.secretKey",
+            "label": "Secret Key",
+            "type": "secret",
+            "required": true,
+            "description": "Django secret key for cryptographic signing"
+        },
+        {
+            "key": "ocr.language",
+            "label": "OCR Language",
+            "type": "string",
+            "default": "eng",
+            "description": "Tesseract OCR language (e.g., eng, deu, fra)"
+        },
+        {
+            "key": "db.password",
+            "label": "Database Password",
+            "type": "secret",
+            "required": true,
+            "description": "PostgreSQL database password"
+        },
+        {
+            "key": "smtp.host",
+            "label": "SMTP Host",
+            "type": "string",
+            "description": "SMTP server hostname for email notifications"
+        },
+        {
+            "key": "smtp.port",
+            "label": "SMTP Port",
+            "type": "integer",
+            "default": 587,
+            "description": "SMTP server port"
+        },
+        {
+            "key": "smtp.username",
+            "label": "SMTP Username",
+            "type": "string",
+            "description": "SMTP authentication username"
+        },
+        {
+            "key": "smtp.password",
+            "label": "SMTP Password",
+            "type": "secret",
+            "description": "SMTP authentication password"
+        }
+    ],
+    "tags": [
+        "documents",
+        "ocr",
+        "paperless",
+        "productivity"
     ]
-  },
-  "volumes": [
-    {
-      "name": "paperless-data",
-      "mount_path": "/usr/src/paperless/data",
-      "default_size": "5Gi",
-      "description": "Paperless application data and index"
-    },
-    {
-      "name": "paperless-media",
-      "mount_path": "/usr/src/paperless/media",
-      "default_size": "20Gi",
-      "description": "Stored and processed documents"
-    },
-    {
-      "name": "paperless-consume",
-      "mount_path": "/usr/src/paperless/consume",
-      "default_size": "5Gi",
-      "description": "Consumption directory for incoming documents"
-    },
-    {
-      "name": "db-data",
-      "mount_path": "/var/lib/postgresql/data",
-      "default_size": "5Gi",
-      "description": "PostgreSQL database storage"
-    }
-  ],
-  "resources": {
-    "default": {
-      "cpu": "1.00",
-      "memory": "1Gi",
-      "storage": "35Gi"
-    },
-    "minimum": {
-      "cpu": "0.50",
-      "memory": "512Mi",
-      "storage": "15Gi"
-    }
-  },
-  "health_check": {
-    "path": "/",
-    "port": 8000,
-    "initial_delay_seconds": 60,
-    "period_seconds": 10
-  },
-  "parameters": [
-    {
-      "key": "domain",
-      "label": "Domain",
-      "type": "string",
-      "required": true,
-      "description": "Fully qualified domain name for Paperless-ngx"
-    },
-    {
-      "key": "admin.username",
-      "label": "Admin Username",
-      "type": "string",
-      "required": true,
-      "description": "Initial superuser username"
-    },
-    {
-      "key": "admin.password",
-      "label": "Admin Password",
-      "type": "secret",
-      "required": true,
-      "description": "Initial superuser password"
-    },
-    {
-      "key": "admin.email",
-      "label": "Admin Email",
-      "type": "string",
-      "required": true,
-      "description": "Initial superuser email address"
-    },
-    {
-      "key": "app.secretKey",
-      "label": "Secret Key",
-      "type": "secret",
-      "required": true,
-      "description": "Django secret key for cryptographic signing"
-    },
-    {
-      "key": "ocr.language",
-      "label": "OCR Language",
-      "type": "string",
-      "default": "eng",
-      "description": "Tesseract OCR language (e.g., eng, deu, fra)"
-    },
-    {
-      "key": "db.password",
-      "label": "Database Password",
-      "type": "secret",
-      "required": true,
-      "description": "PostgreSQL database password"
-    },
-    {
-      "key": "smtp.host",
-      "label": "SMTP Host",
-      "type": "string",
-      "description": "SMTP server hostname for email notifications"
-    },
-    {
-      "key": "smtp.port",
-      "label": "SMTP Port",
-      "type": "integer",
-      "default": 587,
-      "description": "SMTP server port"
-    },
-    {
-      "key": "smtp.username",
-      "label": "SMTP Username",
-      "type": "string",
-      "description": "SMTP authentication username"
-    },
-    {
-      "key": "smtp.password",
-      "label": "SMTP Password",
-      "type": "secret",
-      "description": "SMTP authentication password"
-    }
-  ],
-  "tags": [
-    "documents",
-    "ocr",
-    "paperless",
-    "productivity"
-  ]
 }

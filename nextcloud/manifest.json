@@ -1,231 +1,231 @@
 {
-  "name": "Nextcloud",
-  "code": "nextcloud",
-  "version": "30",
-  "description": "Your own private cloud for files, calendars, contacts, and real-time document collaboration.",
-  "category": "productivity",
-  "tenancy": [
-    "single-tenant",
-    "multi-tenant"
-  ],
-  "components": [
-    {
-      "name": "nextcloud",
-      "type": "deployment",
-      "image": "nextcloud:30-apache",
-      "ports": [
-        {
-          "port": 80,
-          "protocol": "TCP",
-          "ingress": true
-        }
-      ]
-    },
-    {
-      "name": "mariadb",
-      "type": "statefulset",
-      "image": "mariadb:10.11",
-      "ports": [
-        {
-          "port": 3306,
-          "protocol": "TCP",
-          "ingress": false
-        }
-      ]
-    },
-    {
-      "name": "redis",
-      "type": "deployment",
-      "image": "redis:7-alpine",
-      "ports": [
-        {
-          "port": 6379,
-          "protocol": "TCP",
-          "ingress": false
-        }
-      ],
-      "optional": true
-    },
-    {
-      "name": "collabora",
-      "type": "deployment",
-      "image": "collabora/code:24.04",
-      "ports": [
-        {
-          "port": 9980,
-          "protocol": "TCP",
-          "ingress": true
-        }
-      ],
-      "optional": true
-    },
-    {
-      "name": "cron",
-      "type": "cronjob",
-      "image": "nextcloud:30-apache",
-      "schedule": "*/5 * * * *"
-    }
-  ],
-  "networking": {
-    "ingress_ports": [
-      {
-        "port": 443,
-        "protocol": "TCP",
-        "tls": true,
-        "description": "Web UI, WebDAV, CalDAV, CardDAV"
-      }
+    "name": "Nextcloud",
+    "code": "nextcloud",
+    "version": "30",
+    "description": "Your own private cloud for files, calendars, contacts, and real-time document collaboration.",
+    "category": "productivity",
+    "tenancy": [
+        "single-tenant",
+        "multi-tenant"
     ],
-    "host_ports": [],
-    "websocket": true,
-    "notes": "WebDAV/CalDAV/CardDAV all work over standard HTTPS port. Collabora (if enabled) is accessed via the same ingress with a /cool/ path prefix."
-  },
-  "volumes": [
-    {
-      "name": "nextcloud-data",
-      "mount_path": "/var/www/html/data",
-      "default_size": "50Gi",
-      "description": "User files, uploads, and shared data"
+    "components": [
+        {
+            "name": "nextcloud",
+            "type": "deployment",
+            "image": "nextcloud:30-apache",
+            "ports": [
+                {
+                    "port": 80,
+                    "protocol": "TCP",
+                    "ingress": true
+                }
+            ]
+        },
+        {
+            "name": "mariadb",
+            "type": "statefulset",
+            "image": "mariadb:10.11",
+            "ports": [
+                {
+                    "port": 3306,
+                    "protocol": "TCP",
+                    "ingress": false
+                }
+            ]
+        },
+        {
+            "name": "redis",
+            "type": "deployment",
+            "image": "redis:7-alpine",
+            "ports": [
+                {
+                    "port": 6379,
+                    "protocol": "TCP",
+                    "ingress": false
+                }
+            ],
+            "optional": true
+        },
+        {
+            "name": "collabora",
+            "type": "deployment",
+            "image": "collabora/code:24.04",
+            "ports": [
+                {
+                    "port": 9980,
+                    "protocol": "TCP",
+                    "ingress": true
+                }
+            ],
+            "optional": true
+        },
+        {
+            "name": "cron",
+            "type": "cronjob",
+            "image": "nextcloud:30-apache",
+            "schedule": "*/5 * * * *"
+        }
+    ],
+    "networking": {
+        "ingress_ports": [
+            {
+                "port": 443,
+                "protocol": "TCP",
+                "tls": true,
+                "description": "Web UI, WebDAV, CalDAV, CardDAV"
+            }
+        ],
+        "host_ports": [],
+        "websocket": true,
+        "notes": "WebDAV/CalDAV/CardDAV all work over standard HTTPS port. Collabora (if enabled) is accessed via the same ingress with a /cool/ path prefix."
     },
-    {
-      "name": "nextcloud-config",
-      "mount_path": "/var/www/html/config",
-      "default_size": "100Mi",
-      "description": "Nextcloud configuration files"
+    "volumes": [
+        {
+            "name": "nextcloud-data",
+            "mount_path": "/var/www/html/data",
+            "default_size": "50Gi",
+            "description": "User files, uploads, and shared data"
+        },
+        {
+            "name": "nextcloud-config",
+            "mount_path": "/var/www/html/config",
+            "default_size": "100Mi",
+            "description": "Nextcloud configuration files"
+        },
+        {
+            "name": "nextcloud-apps",
+            "mount_path": "/var/www/html/custom_apps",
+            "default_size": "1Gi",
+            "description": "Installed Nextcloud apps"
+        },
+        {
+            "name": "nextcloud-database",
+            "mount_path": "/var/lib/mysql",
+            "default_size": "5Gi",
+            "description": "MariaDB data directory"
+        }
+    ],
+    "resources": {
+        "default": {
+            "cpu": "1.00",
+            "memory": "1Gi",
+            "storage": "56Gi"
+        },
+        "minimum": {
+            "cpu": "0.50",
+            "memory": "512Mi",
+            "storage": "10Gi"
+        }
     },
-    {
-      "name": "nextcloud-custom-apps",
-      "mount_path": "/var/www/html/custom_apps",
-      "default_size": "1Gi",
-      "description": "Installed Nextcloud apps"
+    "health_check": {
+        "path": "/status.php",
+        "port": 80,
+        "initial_delay_seconds": 60,
+        "period_seconds": 30
     },
-    {
-      "name": "db-data",
-      "mount_path": "/var/lib/mysql",
-      "default_size": "5Gi",
-      "description": "MariaDB data directory"
-    }
-  ],
-  "resources": {
-    "default": {
-      "cpu": "1.00",
-      "memory": "1Gi",
-      "storage": "56Gi"
-    },
-    "minimum": {
-      "cpu": "0.50",
-      "memory": "512Mi",
-      "storage": "10Gi"
-    }
-  },
-  "health_check": {
-    "path": "/status.php",
-    "port": 80,
-    "initial_delay_seconds": 60,
-    "period_seconds": 30
-  },
-  "parameters": [
-    {
-      "key": "nextcloud.adminUser",
-      "label": "Admin Username",
-      "type": "string",
-      "default": "admin",
-      "required": true
-    },
-    {
-      "key": "nextcloud.adminPassword",
-      "label": "Admin Password",
-      "type": "secret",
-      "required": true
-    },
-    {
-      "key": "ingress.domain",
-      "label": "Domain",
-      "type": "string",
-      "required": true
-    },
-    {
-      "key": "nextcloud.trustedDomains",
-      "label": "Trusted Domains",
-      "type": "string",
-      "required": true,
-      "description": "Space-separated list of trusted domains"
-    },
-    {
-      "key": "nextcloud.defaultPhoneRegion",
-      "label": "Default Phone Region",
-      "type": "string",
-      "default": "US"
-    },
-    {
-      "key": "nextcloud.smtpHost",
-      "label": "SMTP Server",
-      "type": "string",
-      "required": false
-    },
-    {
-      "key": "nextcloud.smtpPort",
-      "label": "SMTP Port",
-      "type": "integer",
-      "default": 587,
-      "required": false
-    },
-    {
-      "key": "nextcloud.smtpUser",
-      "label": "SMTP Username",
-      "type": "string",
-      "required": false
-    },
-    {
-      "key": "nextcloud.smtpPassword",
-      "label": "SMTP Password",
-      "type": "secret",
-      "required": false
-    },
-    {
-      "key": "nextcloud.smtpFromAddress",
-      "label": "SMTP From Address",
-      "type": "string",
-      "required": false
-    },
-    {
-      "key": "redis.enabled",
-      "label": "Enable Redis Cache",
-      "type": "boolean",
-      "default": true
-    },
-    {
-      "key": "collabora.enabled",
-      "label": "Enable Collabora Online (document editing)",
-      "type": "boolean",
-      "default": false
-    },
-    {
-      "key": "collabora.domain",
-      "label": "Collabora Domain",
-      "type": "string",
-      "required": false,
-      "description": "Separate domain for Collabora (e.g., office.example.com)"
-    },
-    {
-      "key": "nextcloud.dataStorageSize",
-      "label": "Data Storage Size",
-      "type": "string",
-      "default": "50Gi"
-    },
-    {
-      "key": "mariadb.storageSize",
-      "label": "Database Storage Size",
-      "type": "string",
-      "default": "5Gi"
-    }
-  ],
-  "tags": [
-    "productivity",
-    "file-sharing",
-    "collaboration",
-    "webdav",
-    "caldav",
-    "carddav",
-    "office"
-  ]
+    "parameters": [
+        {
+            "key": "nextcloud.adminUser",
+            "label": "Admin Username",
+            "type": "string",
+            "default": "admin",
+            "required": true
+        },
+        {
+            "key": "nextcloud.adminPassword",
+            "label": "Admin Password",
+            "type": "secret",
+            "required": true
+        },
+        {
+            "key": "ingress.domain",
+            "label": "Domain",
+            "type": "string",
+            "required": true
+        },
+        {
+            "key": "nextcloud.trustedDomains",
+            "label": "Trusted Domains",
+            "type": "string",
+            "required": true,
+            "description": "Space-separated list of trusted domains"
+        },
+        {
+            "key": "nextcloud.defaultPhoneRegion",
+            "label": "Default Phone Region",
+            "type": "string",
+            "default": "US"
+        },
+        {
+            "key": "nextcloud.smtpHost",
+            "label": "SMTP Server",
+            "type": "string",
+            "required": false
+        },
+        {
+            "key": "nextcloud.smtpPort",
+            "label": "SMTP Port",
+            "type": "integer",
+            "default": 587,
+            "required": false
+        },
+        {
+            "key": "nextcloud.smtpUser",
+            "label": "SMTP Username",
+            "type": "string",
+            "required": false
+        },
+        {
+            "key": "nextcloud.smtpPassword",
+            "label": "SMTP Password",
+            "type": "secret",
+            "required": false
+        },
+        {
+            "key": "nextcloud.smtpFromAddress",
+            "label": "SMTP From Address",
+            "type": "string",
+            "required": false
+        },
+        {
+            "key": "redis.enabled",
+            "label": "Enable Redis Cache",
+            "type": "boolean",
+            "default": true
+        },
+        {
+            "key": "collabora.enabled",
+            "label": "Enable Collabora Online (document editing)",
+            "type": "boolean",
+            "default": false
+        },
+        {
+            "key": "collabora.domain",
+            "label": "Collabora Domain",
+            "type": "string",
+            "required": false,
+            "description": "Separate domain for Collabora (e.g., office.example.com)"
+        },
+        {
+            "key": "nextcloud.dataStorageSize",
+            "label": "Data Storage Size",
+            "type": "string",
+            "default": "50Gi"
+        },
+        {
+            "key": "mariadb.storageSize",
+            "label": "Database Storage Size",
+            "type": "string",
+            "default": "5Gi"
+        }
+    ],
+    "tags": [
+        "productivity",
+        "file-sharing",
+        "collaboration",
+        "webdav",
+        "caldav",
+        "carddav",
+        "office"
+    ]
 }

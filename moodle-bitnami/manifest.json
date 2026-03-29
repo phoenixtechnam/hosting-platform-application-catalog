@@ -1,208 +1,208 @@
 {
-  "name": "Moodle Bitnami",
-  "code": "moodle-bitnami",
-  "version": "4.5",
-  "description": "Run online courses, quizzes, and training programs with this full-featured learning platform.",
-  "category": "education",
-  "tenancy": [
-    "single-tenant"
-  ],
-  "components": [
-    {
-      "name": "moodle",
-      "type": "deployment",
-      "image": "bitnami/moodle:4.5",
-      "ports": [
-        {
-          "port": 8080,
-          "protocol": "TCP",
-          "ingress": true
-        }
-      ]
-    },
-    {
-      "name": "mariadb",
-      "type": "statefulset",
-      "image": "bitnami/mariadb:10.11",
-      "ports": [
-        {
-          "port": 3306,
-          "protocol": "TCP",
-          "ingress": false
-        }
-      ]
-    },
-    {
-      "name": "redis",
-      "type": "deployment",
-      "image": "redis:7-alpine",
-      "ports": [
-        {
-          "port": 6379,
-          "protocol": "TCP",
-          "ingress": false
-        }
-      ],
-      "optional": true
-    },
-    {
-      "name": "moodle-cron",
-      "type": "cronjob",
-      "image": "bitnami/moodle:4.5",
-      "schedule": "*/1 * * * *"
-    }
-  ],
-  "networking": {
-    "ingress_ports": [
-      {
-        "port": 443,
-        "protocol": "TCP",
-        "tls": true,
-        "description": "Moodle web interface"
-      }
+    "name": "Moodle Bitnami",
+    "code": "moodle-bitnami",
+    "version": "4.5",
+    "description": "Run online courses, quizzes, and training programs with this full-featured learning platform.",
+    "category": "education",
+    "tenancy": [
+        "single-tenant"
     ],
-    "host_ports": [],
-    "websocket": false,
-    "notes": "Moodle supports large file uploads (assignments, SCORM packages). Ingress proxy-body-size should be set to at least 256M."
-  },
-  "volumes": [
-    {
-      "name": "moodle-data",
-      "mount_path": "/bitnami/moodle",
-      "default_size": "20Gi",
-      "description": "Moodle application data, uploaded files, and course content"
+    "components": [
+        {
+            "name": "moodle",
+            "type": "deployment",
+            "image": "bitnami/moodle:4.5",
+            "ports": [
+                {
+                    "port": 8080,
+                    "protocol": "TCP",
+                    "ingress": true
+                }
+            ]
+        },
+        {
+            "name": "mariadb",
+            "type": "statefulset",
+            "image": "bitnami/mariadb:10.11",
+            "ports": [
+                {
+                    "port": 3306,
+                    "protocol": "TCP",
+                    "ingress": false
+                }
+            ]
+        },
+        {
+            "name": "redis",
+            "type": "deployment",
+            "image": "redis:7-alpine",
+            "ports": [
+                {
+                    "port": 6379,
+                    "protocol": "TCP",
+                    "ingress": false
+                }
+            ],
+            "optional": true
+        },
+        {
+            "name": "moodle-cron",
+            "type": "cronjob",
+            "image": "bitnami/moodle:4.5",
+            "schedule": "*/1 * * * *"
+        }
+    ],
+    "networking": {
+        "ingress_ports": [
+            {
+                "port": 443,
+                "protocol": "TCP",
+                "tls": true,
+                "description": "Moodle web interface"
+            }
+        ],
+        "host_ports": [],
+        "websocket": false,
+        "notes": "Moodle supports large file uploads (assignments, SCORM packages). Ingress proxy-body-size should be set to at least 256M."
     },
-    {
-      "name": "moodledata",
-      "mount_path": "/bitnami/moodledata",
-      "default_size": "20Gi",
-      "description": "Moodle data directory (filedir, cache, sessions)"
+    "volumes": [
+        {
+            "name": "moodle-data",
+            "mount_path": "/bitnami/moodle",
+            "default_size": "20Gi",
+            "description": "Moodle application data, uploaded files, and course content"
+        },
+        {
+            "name": "moodle-user-data",
+            "mount_path": "/bitnami/moodledata",
+            "default_size": "20Gi",
+            "description": "Moodle data directory (filedir, cache, sessions)"
+        },
+        {
+            "name": "moodle-database",
+            "mount_path": "/bitnami/mariadb",
+            "default_size": "10Gi",
+            "description": "MariaDB data directory"
+        }
+    ],
+    "resources": {
+        "default": {
+            "cpu": "1.00",
+            "memory": "2Gi",
+            "storage": "50Gi"
+        },
+        "minimum": {
+            "cpu": "0.50",
+            "memory": "1Gi",
+            "storage": "20Gi"
+        }
     },
-    {
-      "name": "db-data",
-      "mount_path": "/bitnami/mariadb",
-      "default_size": "10Gi",
-      "description": "MariaDB data directory"
-    }
-  ],
-  "resources": {
-    "default": {
-      "cpu": "1.00",
-      "memory": "2Gi",
-      "storage": "50Gi"
+    "health_check": {
+        "path": "/login/index.php",
+        "port": 8080,
+        "initial_delay_seconds": 180,
+        "period_seconds": 30
     },
-    "minimum": {
-      "cpu": "0.50",
-      "memory": "1Gi",
-      "storage": "20Gi"
-    }
-  },
-  "health_check": {
-    "path": "/login/index.php",
-    "port": 8080,
-    "initial_delay_seconds": 180,
-    "period_seconds": 30
-  },
-  "parameters": [
-    {
-      "key": "moodle.username",
-      "label": "Admin Username",
-      "type": "string",
-      "default": "admin",
-      "required": true
-    },
-    {
-      "key": "moodle.password",
-      "label": "Admin Password",
-      "type": "secret",
-      "required": true
-    },
-    {
-      "key": "moodle.email",
-      "label": "Admin Email",
-      "type": "string",
-      "required": true
-    },
-    {
-      "key": "moodle.siteName",
-      "label": "Site Name",
-      "type": "string",
-      "default": "Moodle",
-      "required": true
-    },
-    {
-      "key": "ingress.domain",
-      "label": "Domain",
-      "type": "string",
-      "required": true
-    },
-    {
-      "key": "moodle.lang",
-      "label": "Default Language",
-      "type": "string",
-      "default": "en"
-    },
-    {
-      "key": "moodle.phpMaxUploadSize",
-      "label": "PHP Upload Max Size",
-      "type": "string",
-      "default": "256M"
-    },
-    {
-      "key": "moodle.phpMemoryLimit",
-      "label": "PHP Memory Limit",
-      "type": "string",
-      "default": "512M"
-    },
-    {
-      "key": "redis.enabled",
-      "label": "Enable Redis Session Cache",
-      "type": "boolean",
-      "default": true
-    },
-    {
-      "key": "moodle.smtpHost",
-      "label": "SMTP Server",
-      "type": "string",
-      "required": false
-    },
-    {
-      "key": "moodle.smtpPort",
-      "label": "SMTP Port",
-      "type": "integer",
-      "default": 587,
-      "required": false
-    },
-    {
-      "key": "moodle.smtpUser",
-      "label": "SMTP Username",
-      "type": "string",
-      "required": false
-    },
-    {
-      "key": "moodle.smtpPassword",
-      "label": "SMTP Password",
-      "type": "secret",
-      "required": false
-    },
-    {
-      "key": "mariadb.storageSize",
-      "label": "Database Storage Size",
-      "type": "string",
-      "default": "10Gi"
-    },
-    {
-      "key": "moodle.dataStorageSize",
-      "label": "Moodle Data Storage Size",
-      "type": "string",
-      "default": "20Gi"
-    }
-  ],
-  "tags": [
-    "education",
-    "lms",
-    "elearning",
-    "courses",
-    "moodle"
-  ]
+    "parameters": [
+        {
+            "key": "moodle.username",
+            "label": "Admin Username",
+            "type": "string",
+            "default": "admin",
+            "required": true
+        },
+        {
+            "key": "moodle.password",
+            "label": "Admin Password",
+            "type": "secret",
+            "required": true
+        },
+        {
+            "key": "moodle.email",
+            "label": "Admin Email",
+            "type": "string",
+            "required": true
+        },
+        {
+            "key": "moodle.siteName",
+            "label": "Site Name",
+            "type": "string",
+            "default": "Moodle",
+            "required": true
+        },
+        {
+            "key": "ingress.domain",
+            "label": "Domain",
+            "type": "string",
+            "required": true
+        },
+        {
+            "key": "moodle.lang",
+            "label": "Default Language",
+            "type": "string",
+            "default": "en"
+        },
+        {
+            "key": "moodle.phpMaxUploadSize",
+            "label": "PHP Upload Max Size",
+            "type": "string",
+            "default": "256M"
+        },
+        {
+            "key": "moodle.phpMemoryLimit",
+            "label": "PHP Memory Limit",
+            "type": "string",
+            "default": "512M"
+        },
+        {
+            "key": "redis.enabled",
+            "label": "Enable Redis Session Cache",
+            "type": "boolean",
+            "default": true
+        },
+        {
+            "key": "moodle.smtpHost",
+            "label": "SMTP Server",
+            "type": "string",
+            "required": false
+        },
+        {
+            "key": "moodle.smtpPort",
+            "label": "SMTP Port",
+            "type": "integer",
+            "default": 587,
+            "required": false
+        },
+        {
+            "key": "moodle.smtpUser",
+            "label": "SMTP Username",
+            "type": "string",
+            "required": false
+        },
+        {
+            "key": "moodle.smtpPassword",
+            "label": "SMTP Password",
+            "type": "secret",
+            "required": false
+        },
+        {
+            "key": "mariadb.storageSize",
+            "label": "Database Storage Size",
+            "type": "string",
+            "default": "10Gi"
+        },
+        {
+            "key": "moodle.dataStorageSize",
+            "label": "Moodle Data Storage Size",
+            "type": "string",
+            "default": "20Gi"
+        }
+    ],
+    "tags": [
+        "education",
+        "lms",
+        "elearning",
+        "courses",
+        "moodle"
+    ]
 }

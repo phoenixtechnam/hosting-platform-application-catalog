@@ -1,106 +1,106 @@
 {
-  "name": "Wiki.js",
-  "code": "wiki-js",
-  "version": "2.5",
-  "description": "A modern, fast wiki for your team with markdown editing, access control, and full-text search.",
-  "category": "documentation",
-  "tenancy": [
-    "single-tenant"
-  ],
-  "components": [
-    {
-      "name": "wiki",
-      "type": "deployment",
-      "image": "ghcr.io/requarks/wiki:2",
-      "ports": [
-        {
-          "port": 3000,
-          "protocol": "TCP",
-          "ingress": true
-        }
-      ]
-    },
-    {
-      "name": "postgresql",
-      "type": "statefulset",
-      "image": "postgres:16-alpine",
-      "ports": [
-        {
-          "port": 5432,
-          "protocol": "TCP",
-          "ingress": false
-        }
-      ]
-    }
-  ],
-  "networking": {
-    "ingress_ports": [
-      {
-        "port": 443,
-        "protocol": "TCP",
-        "tls": true,
-        "description": "Web UI"
-      }
+    "name": "Wiki.js",
+    "code": "wiki-js",
+    "version": "2.5",
+    "description": "A modern, fast wiki for your team with markdown editing, access control, and full-text search.",
+    "category": "documentation",
+    "tenancy": [
+        "single-tenant"
     ],
-    "host_ports": [],
-    "websocket": false
-  },
-  "volumes": [
-    {
-      "name": "db-data",
-      "mount_path": "/var/lib/postgresql/data",
-      "default_size": "5Gi",
-      "description": "PostgreSQL data directory"
-    }
-  ],
-  "resources": {
-    "default": {
-      "cpu": "0.25",
-      "memory": "256Mi",
-      "storage": "5Gi"
+    "components": [
+        {
+            "name": "wiki",
+            "type": "deployment",
+            "image": "ghcr.io/requarks/wiki:2",
+            "ports": [
+                {
+                    "port": 3000,
+                    "protocol": "TCP",
+                    "ingress": true
+                }
+            ]
+        },
+        {
+            "name": "postgresql",
+            "type": "statefulset",
+            "image": "postgres:16-alpine",
+            "ports": [
+                {
+                    "port": 5432,
+                    "protocol": "TCP",
+                    "ingress": false
+                }
+            ]
+        }
+    ],
+    "networking": {
+        "ingress_ports": [
+            {
+                "port": 443,
+                "protocol": "TCP",
+                "tls": true,
+                "description": "Web UI"
+            }
+        ],
+        "host_ports": [],
+        "websocket": false
     },
-    "minimum": {
-      "cpu": "0.10",
-      "memory": "128Mi",
-      "storage": "2Gi"
-    }
-  },
-  "health_check": {
-    "path": "/",
-    "port": 3000,
-    "initial_delay_seconds": 30,
-    "period_seconds": 30
-  },
-  "parameters": [
-    {
-      "key": "ingress.domain",
-      "label": "Domain",
-      "type": "string",
-      "required": true
+    "volumes": [
+        {
+            "name": "wikijs-database",
+            "mount_path": "/var/lib/postgresql/data",
+            "default_size": "5Gi",
+            "description": "PostgreSQL data directory"
+        }
+    ],
+    "resources": {
+        "default": {
+            "cpu": "0.25",
+            "memory": "256Mi",
+            "storage": "5Gi"
+        },
+        "minimum": {
+            "cpu": "0.10",
+            "memory": "128Mi",
+            "storage": "2Gi"
+        }
     },
-    {
-      "key": "wiki.adminEmail",
-      "label": "Admin Email",
-      "type": "string",
-      "required": true
+    "health_check": {
+        "path": "/",
+        "port": 3000,
+        "initial_delay_seconds": 30,
+        "period_seconds": 30
     },
-    {
-      "key": "wiki.adminPassword",
-      "label": "Admin Password",
-      "type": "secret",
-      "required": true
-    },
-    {
-      "key": "postgresql.storageSize",
-      "label": "Database Storage Size",
-      "type": "string",
-      "default": "5Gi"
-    }
-  ],
-  "tags": [
-    "wiki",
-    "documentation",
-    "markdown",
-    "wiki-js"
-  ]
+    "parameters": [
+        {
+            "key": "ingress.domain",
+            "label": "Domain",
+            "type": "string",
+            "required": true
+        },
+        {
+            "key": "wiki.adminEmail",
+            "label": "Admin Email",
+            "type": "string",
+            "required": true
+        },
+        {
+            "key": "wiki.adminPassword",
+            "label": "Admin Password",
+            "type": "secret",
+            "required": true
+        },
+        {
+            "key": "postgresql.storageSize",
+            "label": "Database Storage Size",
+            "type": "string",
+            "default": "5Gi"
+        }
+    ],
+    "tags": [
+        "wiki",
+        "documentation",
+        "markdown",
+        "wiki-js"
+    ]
 }

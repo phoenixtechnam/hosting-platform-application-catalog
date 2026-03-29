@@ -1,156 +1,156 @@
 {
-  "name": "PrestaShop",
-  "code": "prestashop",
-  "version": "8",
-  "description": "Launch your own online store with product management, payments, and shipping built in.",
-  "category": "ecommerce",
-  "tenancy": [
-    "single-tenant"
-  ],
-  "components": [
-    {
-      "name": "prestashop",
-      "type": "deployment",
-      "image": "prestashop/prestashop:8",
-      "ports": [
-        {
-          "port": 80,
-          "protocol": "TCP",
-          "ingress": true
-        }
-      ]
-    },
-    {
-      "name": "mariadb",
-      "type": "statefulset",
-      "image": "mariadb:10.11",
-      "ports": [
-        {
-          "port": 3306,
-          "protocol": "TCP",
-          "ingress": false
-        }
-      ]
-    }
-  ],
-  "networking": {
-    "ingress_ports": [
-      {
-        "port": 443,
-        "protocol": "TCP",
-        "tls": true,
-        "description": "Web UI and REST API"
-      }
+    "name": "PrestaShop",
+    "code": "prestashop",
+    "version": "8",
+    "description": "Launch your own online store with product management, payments, and shipping built in.",
+    "category": "ecommerce",
+    "tenancy": [
+        "single-tenant"
     ],
-    "host_ports": [],
-    "websocket": false
-  },
-  "volumes": [
-    {
-      "name": "ps-data",
-      "mount_path": "/var/www/html",
-      "default_size": "20Gi",
-      "description": "PrestaShop application data"
+    "components": [
+        {
+            "name": "prestashop",
+            "type": "deployment",
+            "image": "prestashop/prestashop:8",
+            "ports": [
+                {
+                    "port": 80,
+                    "protocol": "TCP",
+                    "ingress": true
+                }
+            ]
+        },
+        {
+            "name": "mariadb",
+            "type": "statefulset",
+            "image": "mariadb:10.11",
+            "ports": [
+                {
+                    "port": 3306,
+                    "protocol": "TCP",
+                    "ingress": false
+                }
+            ]
+        }
+    ],
+    "networking": {
+        "ingress_ports": [
+            {
+                "port": 443,
+                "protocol": "TCP",
+                "tls": true,
+                "description": "Web UI and REST API"
+            }
+        ],
+        "host_ports": [],
+        "websocket": false
     },
-    {
-      "name": "db-data",
-      "mount_path": "/var/lib/mysql",
-      "default_size": "10Gi",
-      "description": "MariaDB data directory"
-    }
-  ],
-  "resources": {
-    "default": {
-      "cpu": "0.50",
-      "memory": "512Mi",
-      "storage": "30Gi"
+    "volumes": [
+        {
+            "name": "prestashop-data",
+            "mount_path": "/var/www/html",
+            "default_size": "20Gi",
+            "description": "PrestaShop application data"
+        },
+        {
+            "name": "prestashop-database",
+            "mount_path": "/var/lib/mysql",
+            "default_size": "10Gi",
+            "description": "MariaDB data directory"
+        }
+    ],
+    "resources": {
+        "default": {
+            "cpu": "0.50",
+            "memory": "512Mi",
+            "storage": "30Gi"
+        },
+        "minimum": {
+            "cpu": "0.25",
+            "memory": "256Mi",
+            "storage": "10Gi"
+        }
     },
-    "minimum": {
-      "cpu": "0.25",
-      "memory": "256Mi",
-      "storage": "10Gi"
-    }
-  },
-  "health_check": {
-    "path": "/index.php",
-    "port": 80,
-    "initial_delay_seconds": 120,
-    "period_seconds": 30
-  },
-  "parameters": [
-    {
-      "key": "prestashop.adminEmail",
-      "label": "Admin Email",
-      "type": "string",
-      "required": true
+    "health_check": {
+        "path": "/index.php",
+        "port": 80,
+        "initial_delay_seconds": 120,
+        "period_seconds": 30
     },
-    {
-      "key": "prestashop.adminPassword",
-      "label": "Admin Password",
-      "type": "secret",
-      "required": true
-    },
-    {
-      "key": "prestashop.shopName",
-      "label": "Shop Name",
-      "type": "string",
-      "default": "My Shop",
-      "required": true
-    },
-    {
-      "key": "ingress.domain",
-      "label": "Domain",
-      "type": "string",
-      "required": true
-    },
-    {
-      "key": "prestashop.language",
-      "label": "Language",
-      "type": "string",
-      "default": "en"
-    },
-    {
-      "key": "mariadb.storageSize",
-      "label": "Database Storage Size",
-      "type": "string",
-      "default": "10Gi"
-    },
-    {
-      "key": "psData.storageSize",
-      "label": "Application Storage Size",
-      "type": "string",
-      "default": "20Gi"
-    },
-    {
-      "key": "smtp.host",
-      "label": "SMTP Server",
-      "type": "string",
-      "required": false
-    },
-    {
-      "key": "smtp.port",
-      "label": "SMTP Port",
-      "type": "integer",
-      "default": 587,
-      "required": false
-    },
-    {
-      "key": "smtp.username",
-      "label": "SMTP Username",
-      "type": "string",
-      "required": false
-    },
-    {
-      "key": "smtp.password",
-      "label": "SMTP Password",
-      "type": "secret",
-      "required": false
-    }
-  ],
-  "tags": [
-    "ecommerce",
-    "shop",
-    "prestashop",
-    "php"
-  ]
+    "parameters": [
+        {
+            "key": "prestashop.adminEmail",
+            "label": "Admin Email",
+            "type": "string",
+            "required": true
+        },
+        {
+            "key": "prestashop.adminPassword",
+            "label": "Admin Password",
+            "type": "secret",
+            "required": true
+        },
+        {
+            "key": "prestashop.shopName",
+            "label": "Shop Name",
+            "type": "string",
+            "default": "My Shop",
+            "required": true
+        },
+        {
+            "key": "ingress.domain",
+            "label": "Domain",
+            "type": "string",
+            "required": true
+        },
+        {
+            "key": "prestashop.language",
+            "label": "Language",
+            "type": "string",
+            "default": "en"
+        },
+        {
+            "key": "mariadb.storageSize",
+            "label": "Database Storage Size",
+            "type": "string",
+            "default": "10Gi"
+        },
+        {
+            "key": "psData.storageSize",
+            "label": "Application Storage Size",
+            "type": "string",
+            "default": "20Gi"
+        },
+        {
+            "key": "smtp.host",
+            "label": "SMTP Server",
+            "type": "string",
+            "required": false
+        },
+        {
+            "key": "smtp.port",
+            "label": "SMTP Port",
+            "type": "integer",
+            "default": 587,
+            "required": false
+        },
+        {
+            "key": "smtp.username",
+            "label": "SMTP Username",
+            "type": "string",
+            "required": false
+        },
+        {
+            "key": "smtp.password",
+            "label": "SMTP Password",
+            "type": "secret",
+            "required": false
+        }
+    ],
+    "tags": [
+        "ecommerce",
+        "shop",
+        "prestashop",
+        "php"
+    ]
 }
