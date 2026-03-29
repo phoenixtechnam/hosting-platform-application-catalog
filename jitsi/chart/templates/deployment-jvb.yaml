@@ -54,15 +54,15 @@ spec:
             httpGet:
               path: /about/health
               port: colibri
-            initialDelaySeconds: 30
-            periodSeconds: 10
+            initialDelaySeconds: 60
+            periodSeconds: 60
             timeoutSeconds: 5
-            failureThreshold: 3
+            failureThreshold: 5
           readinessProbe:
             httpGet:
               path: /about/health
               port: colibri
             initialDelaySeconds: 15
-            periodSeconds: 5
-            timeoutSeconds: 3
+            periodSeconds: 30
+            timeoutSeconds: 5
             failureThreshold: 3

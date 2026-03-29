@@ -55,17 +55,17 @@ spec:
             httpGet:
               path: /wp-login.php
               port: http
-            initialDelaySeconds: 30
-            periodSeconds: 15
+            initialDelaySeconds: 60
+            periodSeconds: 30
             timeoutSeconds: 5
-            failureThreshold: 3
+            failureThreshold: 5
           readinessProbe:
             httpGet:
               path: /wp-includes/images/blank.gif
               port: http
-            initialDelaySeconds: 10
-            periodSeconds: 10
-            timeoutSeconds: 3
+            initialDelaySeconds: 15
+            periodSeconds: 30
+            timeoutSeconds: 5
             failureThreshold: 3
           securityContext:
             runAsNonRoot: false

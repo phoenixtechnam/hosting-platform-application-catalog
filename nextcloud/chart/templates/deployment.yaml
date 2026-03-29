@@ -144,8 +144,8 @@ spec:
               httpHeaders:
                 - name: Host
                   value: {{ .Values.ingress.domain | quote }}
-            initialDelaySeconds: 30
-            periodSeconds: 15
+            initialDelaySeconds: 60
+            periodSeconds: 30
             timeoutSeconds: 5
             failureThreshold: 5
           readinessProbe:
@@ -155,8 +155,8 @@ spec:
               httpHeaders:
                 - name: Host
                   value: {{ .Values.ingress.domain | quote }}
-            initialDelaySeconds: 10
-            periodSeconds: 10
+            initialDelaySeconds: 15
+            periodSeconds: 30
             timeoutSeconds: 5
             failureThreshold: 3
           resources:

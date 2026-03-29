@@ -50,16 +50,16 @@ spec:
           livenessProbe:
             tcpSocket:
               port: xmpp-c2s
-            initialDelaySeconds: 20
-            periodSeconds: 10
+            initialDelaySeconds: 60
+            periodSeconds: 30
             timeoutSeconds: 5
-            failureThreshold: 3
+            failureThreshold: 5
           readinessProbe:
             tcpSocket:
               port: xmpp-c2s
-            initialDelaySeconds: 10
-            periodSeconds: 5
-            timeoutSeconds: 3
+            initialDelaySeconds: 15
+            periodSeconds: 30
+            timeoutSeconds: 5
             failureThreshold: 3
       volumes:
         - name: prosody-config

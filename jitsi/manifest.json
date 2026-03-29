@@ -67,8 +67,8 @@
   "health_check": {
     "path": "/",
     "port": 80,
-    "initial_delay_seconds": 20,
-    "period_seconds": 10
+    "initial_delay_seconds": 30,
+    "period_seconds": 30
   },
   "parameters": [
     { "key": "ingress.domain", "label": "Domain (e.g., meet.example.com)", "type": "string", "required": true },

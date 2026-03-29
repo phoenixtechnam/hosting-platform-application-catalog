@@ -53,8 +53,8 @@
   "health_check": {
     "path": "/login/index.php",
     "port": 8080,
-    "initial_delay_seconds": 120,
-    "period_seconds": 15
+    "initial_delay_seconds": 180,
+    "period_seconds": 30
   },
   "parameters": [
     { "key": "moodle.username", "label": "Admin Username", "type": "string", "default": "admin", "required": true },

@@ -61,8 +61,8 @@
   "health_check": {
     "path": "/status.php",
     "port": 80,
-    "initial_delay_seconds": 30,
-    "period_seconds": 15
+    "initial_delay_seconds": 60,
+    "period_seconds": 30
   },
   "parameters": [
     { "key": "nextcloud.adminUser", "label": "Admin Username", "type": "string", "default": "admin", "required": true },

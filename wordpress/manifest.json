@@ -52,8 +52,8 @@
   "health_check": {
     "path": "/wp-login.php",
     "port": 80,
-    "initial_delay_seconds": 30,
-    "period_seconds": 15
+    "initial_delay_seconds": 60,
+    "period_seconds": 30
   },
   "parameters": [
     { "key": "wordpress.siteTitle", "label": "Site Title", "type": "string", "default": "My WordPress Site", "required": true },

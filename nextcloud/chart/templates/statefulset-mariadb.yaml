@@ -63,8 +63,8 @@ spec:
                 - sh
                 - -c
                 - "mysqladmin ping -u root -p${MARIADB_ROOT_PASSWORD}"
-            initialDelaySeconds: 30
-            periodSeconds: 10
+            initialDelaySeconds: 60
+            periodSeconds: 30
             timeoutSeconds: 5
             failureThreshold: 5
           readinessProbe:
@@ -73,8 +73,8 @@ spec:
                 - sh
                 - -c
                 - "mysqladmin ping -u root -p${MARIADB_ROOT_PASSWORD}"
-            initialDelaySeconds: 10
-            periodSeconds: 10
+            initialDelaySeconds: 15
+            periodSeconds: 15
             timeoutSeconds: 5
             failureThreshold: 3
           resources:
