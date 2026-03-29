@@ -2,17 +2,22 @@
   "name": "Strapi CMS",
   "code": "strapi",
   "version": "5",
-  "description": "Open-source headless CMS built with Node.js. Provides a customizable API and admin panel for managing content with full control over your data.",
+  "description": "Build and manage your content with a flexible headless CMS that powers websites, apps, and more.",
   "category": "cms",
-  "min_plan": "starter",
-  "tenancy": ["single-tenant"],
+  "tenancy": [
+    "single-tenant"
+  ],
   "components": [
     {
       "name": "strapi",
       "type": "deployment",
       "image": "node:20-alpine",
       "ports": [
-        { "port": 1337, "protocol": "TCP", "ingress": true }
+        {
+          "port": 1337,
+          "protocol": "TCP",
+          "ingress": true
+        }
       ]
     },
     {
@@ -20,7 +25,10 @@
       "type": "statefulset",
       "image": "postgres:16-alpine",
       "ports": [
-        { "port": 5432, "protocol": "TCP" }
+        {
+          "port": 5432,
+          "protocol": "TCP"
+        }
       ]
     }
   ],
@@ -110,5 +118,10 @@
       "description": "PostgreSQL database password"
     }
   ],
-  "tags": ["cms", "headless", "strapi", "api"]
+  "tags": [
+    "cms",
+    "headless",
+    "strapi",
+    "api"
+  ]
 }

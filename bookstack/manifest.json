@@ -2,38 +2,74 @@
   "name": "BookStack",
   "code": "bookstack",
   "version": "latest",
-  "description": "Managed BookStack documentation and wiki platform with MariaDB",
+  "description": "Organize your team's knowledge with an easy-to-use wiki that anyone can edit and search.",
   "category": "documentation",
-  "min_plan": "starter",
-  "tenancy": ["single-tenant"],
+  "tenancy": [
+    "single-tenant"
+  ],
   "components": [
     {
       "name": "bookstack",
       "type": "deployment",
       "image": "lscr.io/linuxserver/bookstack:latest",
-      "ports": [{ "port": 80, "protocol": "TCP", "ingress": true }]
+      "ports": [
+        {
+          "port": 80,
+          "protocol": "TCP",
+          "ingress": true
+        }
+      ]
     },
     {
       "name": "mariadb",
       "type": "statefulset",
       "image": "mariadb:10.11",
-      "ports": [{ "port": 3306, "protocol": "TCP", "ingress": false }]
+      "ports": [
+        {
+          "port": 3306,
+          "protocol": "TCP",
+          "ingress": false
+        }
+      ]
     }
   ],
   "networking": {
     "ingress_ports": [
-      { "port": 443, "protocol": "TCP", "tls": true, "description": "Web UI" }
+      {
+        "port": 443,
+        "protocol": "TCP",
+        "tls": true,
+        "description": "Web UI"
+      }
     ],
     "host_ports": [],
     "websocket": false
   },
   "volumes": [
-    { "name": "bookstack-data", "mount_path": "/config", "default_size": "2Gi", "description": "BookStack configuration and uploads" },
-    { "name": "db-data", "mount_path": "/var/lib/mysql", "default_size": "5Gi", "description": "MariaDB data directory" }
+    {
+      "name": "bookstack-data",
+      "mount_path": "/config",
+      "default_size": "2Gi",
+      "description": "BookStack configuration and uploads"
+    },
+    {
+      "name": "db-data",
+      "mount_path": "/var/lib/mysql",
+      "default_size": "5Gi",
+      "description": "MariaDB data directory"
+    }
   ],
   "resources": {
-    "default": { "cpu": "0.25", "memory": "256Mi", "storage": "7Gi" },
-    "minimum": { "cpu": "0.10", "memory": "128Mi", "storage": "3Gi" }
+    "default": {
+      "cpu": "0.25",
+      "memory": "256Mi",
+      "storage": "7Gi"
+    },
+    "minimum": {
+      "cpu": "0.10",
+      "memory": "128Mi",
+      "storage": "3Gi"
+    }
   },
   "health_check": {
     "path": "/login",
@@ -42,14 +78,60 @@
     "period_seconds": 30
   },
   "parameters": [
-    { "key": "ingress.domain", "label": "Domain", "type": "string", "required": true },
-    { "key": "bookstack.appUrl", "label": "Application URL", "type": "string", "required": true },
-    { "key": "mariadb.storageSize", "label": "Database Storage Size", "type": "string", "default": "5Gi" },
-    { "key": "bookstackData.storageSize", "label": "Application Storage Size", "type": "string", "default": "2Gi" },
-    { "key": "smtp.host", "label": "SMTP Server", "type": "string", "required": false },
-    { "key": "smtp.port", "label": "SMTP Port", "type": "integer", "default": 587, "required": false },
-    { "key": "smtp.username", "label": "SMTP Username", "type": "string", "required": false },
-    { "key": "smtp.password", "label": "SMTP Password", "type": "secret", "required": false }
+    {
+      "key": "ingress.domain",
+      "label": "Domain",
+      "type": "string",
+      "required": true
+    },
+    {
+      "key": "bookstack.appUrl",
+      "label": "Application URL",
+      "type": "string",
+      "required": true
+    },
+    {
+      "key": "mariadb.storageSize",
+      "label": "Database Storage Size",
+      "type": "string",
+      "default": "5Gi"
+    },
+    {
+      "key": "bookstackData.storageSize",
+      "label": "Application Storage Size",
+      "type": "string",
+      "default": "2Gi"
+    },
+    {
+      "key": "smtp.host",
+      "label": "SMTP Server",
+      "type": "string",
+      "required": false
+    },
+    {
+      "key": "smtp.port",
+      "label": "SMTP Port",
+      "type": "integer",
+      "default": 587,
+      "required": false
+    },
+    {
+      "key": "smtp.username",
+      "label": "SMTP Username",
+      "type": "string",
+      "required": false
+    },
+    {
+      "key": "smtp.password",
+      "label": "SMTP Password",
+      "type": "secret",
+      "required": false
+    }
   ],
-  "tags": ["wiki", "documentation", "knowledge-base", "bookstack"]
+  "tags": [
+    "wiki",
+    "documentation",
+    "knowledge-base",
+    "bookstack"
+  ]
 }

@@ -2,31 +2,56 @@
   "name": "Uptime Kuma",
   "code": "uptime-kuma",
   "version": "1",
-  "description": "Managed Uptime Kuma monitoring and status page with embedded SQLite",
+  "description": "Monitor your websites and services with instant alerts when something goes down.",
   "category": "monitoring",
-  "min_plan": "starter",
-  "tenancy": ["multi-tenant"],
+  "tenancy": [
+    "multi-tenant"
+  ],
   "components": [
     {
       "name": "uptime-kuma",
       "type": "deployment",
       "image": "louislam/uptime-kuma:1",
-      "ports": [{ "port": 3001, "protocol": "TCP", "ingress": true }]
+      "ports": [
+        {
+          "port": 3001,
+          "protocol": "TCP",
+          "ingress": true
+        }
+      ]
     }
   ],
   "networking": {
     "ingress_ports": [
-      { "port": 443, "protocol": "TCP", "tls": true, "description": "Web UI and status page" }
+      {
+        "port": 443,
+        "protocol": "TCP",
+        "tls": true,
+        "description": "Web UI and status page"
+      }
     ],
     "host_ports": [],
     "websocket": false
   },
   "volumes": [
-    { "name": "kuma-data", "mount_path": "/app/data", "default_size": "1Gi", "description": "Uptime Kuma data and SQLite database" }
+    {
+      "name": "kuma-data",
+      "mount_path": "/app/data",
+      "default_size": "1Gi",
+      "description": "Uptime Kuma data and SQLite database"
+    }
   ],
   "resources": {
-    "default": { "cpu": "0.25", "memory": "256Mi", "storage": "1Gi" },
-    "minimum": { "cpu": "0.10", "memory": "128Mi", "storage": "1Gi" }
+    "default": {
+      "cpu": "0.25",
+      "memory": "256Mi",
+      "storage": "1Gi"
+    },
+    "minimum": {
+      "cpu": "0.10",
+      "memory": "128Mi",
+      "storage": "1Gi"
+    }
   },
   "health_check": {
     "path": "/api/health",
@@ -35,8 +60,22 @@
     "period_seconds": 10
   },
   "parameters": [
-    { "key": "ingress.domain", "label": "Domain", "type": "string", "required": true },
-    { "key": "kumaData.storageSize", "label": "Data Storage Size", "type": "string", "default": "1Gi" }
+    {
+      "key": "ingress.domain",
+      "label": "Domain",
+      "type": "string",
+      "required": true
+    },
+    {
+      "key": "kumaData.storageSize",
+      "label": "Data Storage Size",
+      "type": "string",
+      "default": "1Gi"
+    }
   ],
-  "tags": ["monitoring", "uptime", "status-page"]
+  "tags": [
+    "monitoring",
+    "uptime",
+    "status-page"
+  ]
 }

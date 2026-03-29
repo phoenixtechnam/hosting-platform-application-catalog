@@ -2,38 +2,74 @@
   "name": "Matomo",
   "code": "matomo",
   "version": "5",
-  "description": "Managed Matomo web analytics platform with MariaDB",
+  "description": "Track your website visitors with full privacy — a Google Analytics alternative you own and control.",
   "category": "analytics",
-  "min_plan": "starter",
-  "tenancy": ["multi-tenant"],
+  "tenancy": [
+    "multi-tenant"
+  ],
   "components": [
     {
       "name": "matomo",
       "type": "deployment",
       "image": "matomo:5",
-      "ports": [{ "port": 80, "protocol": "TCP", "ingress": true }]
+      "ports": [
+        {
+          "port": 80,
+          "protocol": "TCP",
+          "ingress": true
+        }
+      ]
     },
     {
       "name": "mariadb",
       "type": "statefulset",
       "image": "mariadb:10.11",
-      "ports": [{ "port": 3306, "protocol": "TCP", "ingress": false }]
+      "ports": [
+        {
+          "port": 3306,
+          "protocol": "TCP",
+          "ingress": false
+        }
+      ]
     }
   ],
   "networking": {
     "ingress_ports": [
-      { "port": 443, "protocol": "TCP", "tls": true, "description": "Web UI and tracking API" }
+      {
+        "port": 443,
+        "protocol": "TCP",
+        "tls": true,
+        "description": "Web UI and tracking API"
+      }
     ],
     "host_ports": [],
     "websocket": false
   },
   "volumes": [
-    { "name": "matomo-data", "mount_path": "/var/www/html", "default_size": "5Gi", "description": "Matomo application data" },
-    { "name": "db-data", "mount_path": "/var/lib/mysql", "default_size": "5Gi", "description": "MariaDB data directory" }
+    {
+      "name": "matomo-data",
+      "mount_path": "/var/www/html",
+      "default_size": "5Gi",
+      "description": "Matomo application data"
+    },
+    {
+      "name": "db-data",
+      "mount_path": "/var/lib/mysql",
+      "default_size": "5Gi",
+      "description": "MariaDB data directory"
+    }
   ],
   "resources": {
-    "default": { "cpu": "0.50", "memory": "512Mi", "storage": "10Gi" },
-    "minimum": { "cpu": "0.25", "memory": "256Mi", "storage": "5Gi" }
+    "default": {
+      "cpu": "0.50",
+      "memory": "512Mi",
+      "storage": "10Gi"
+    },
+    "minimum": {
+      "cpu": "0.25",
+      "memory": "256Mi",
+      "storage": "5Gi"
+    }
   },
   "health_check": {
     "path": "/matomo.php",
@@ -42,15 +78,67 @@
     "period_seconds": 30
   },
   "parameters": [
-    { "key": "matomo.adminUser", "label": "Admin Username", "type": "string", "default": "admin", "required": true },
-    { "key": "matomo.adminPassword", "label": "Admin Password", "type": "secret", "required": true },
-    { "key": "ingress.domain", "label": "Domain", "type": "string", "required": true },
-    { "key": "mariadb.storageSize", "label": "Database Storage Size", "type": "string", "default": "5Gi" },
-    { "key": "matomoData.storageSize", "label": "Application Storage Size", "type": "string", "default": "5Gi" },
-    { "key": "smtp.host", "label": "SMTP Server", "type": "string", "required": false },
-    { "key": "smtp.port", "label": "SMTP Port", "type": "integer", "default": 587, "required": false },
-    { "key": "smtp.username", "label": "SMTP Username", "type": "string", "required": false },
-    { "key": "smtp.password", "label": "SMTP Password", "type": "secret", "required": false }
+    {
+      "key": "matomo.adminUser",
+      "label": "Admin Username",
+      "type": "string",
+      "default": "admin",
+      "required": true
+    },
+    {
+      "key": "matomo.adminPassword",
+      "label": "Admin Password",
+      "type": "secret",
+      "required": true
+    },
+    {
+      "key": "ingress.domain",
+      "label": "Domain",
+      "type": "string",
+      "required": true
+    },
+    {
+      "key": "mariadb.storageSize",
+      "label": "Database Storage Size",
+      "type": "string",
+      "default": "5Gi"
+    },
+    {
+      "key": "matomoData.storageSize",
+      "label": "Application Storage Size",
+      "type": "string",
+      "default": "5Gi"
+    },
+    {
+      "key": "smtp.host",
+      "label": "SMTP Server",
+      "type": "string",
+      "required": false
+    },
+    {
+      "key": "smtp.port",
+      "label": "SMTP Port",
+      "type": "integer",
+      "default": 587,
+      "required": false
+    },
+    {
+      "key": "smtp.username",
+      "label": "SMTP Username",
+      "type": "string",
+      "required": false
+    },
+    {
+      "key": "smtp.password",
+      "label": "SMTP Password",
+      "type": "secret",
+      "required": false
+    }
   ],
-  "tags": ["analytics", "matomo", "privacy", "gdpr"]
+  "tags": [
+    "analytics",
+    "matomo",
+    "privacy",
+    "gdpr"
+  ]
 }

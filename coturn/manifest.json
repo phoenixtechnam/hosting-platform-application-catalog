@@ -2,36 +2,81 @@
   "name": "Coturn TURN Server",
   "code": "coturn",
   "version": "4.6",
-  "description": "Standalone TURN/STUN server for WebRTC NAT traversal — used by Jitsi, BigBlueButton, and other real-time communication apps",
+  "description": "A TURN/STUN relay server that ensures video calls work reliably across firewalls and networks.",
   "category": "communication",
-  "min_plan": "business",
-  "tenancy": ["single-tenant"],
+  "tenancy": [
+    "single-tenant"
+  ],
   "components": [
     {
       "name": "coturn",
       "type": "deployment",
       "image": "coturn/coturn:4.6",
       "ports": [
-        { "port": 3478, "protocol": "TCP", "ingress": false },
-        { "port": 3478, "protocol": "UDP", "ingress": false },
-        { "port": 5349, "protocol": "TCP", "ingress": false }
+        {
+          "port": 3478,
+          "protocol": "TCP",
+          "ingress": false
+        },
+        {
+          "port": 3478,
+          "protocol": "UDP",
+          "ingress": false
+        },
+        {
+          "port": 5349,
+          "protocol": "TCP",
+          "ingress": false
+        }
       ]
     }
   ],
   "networking": {
     "ingress_ports": [],
     "host_ports": [
-      { "port": 3478, "protocol": "UDP", "component": "coturn", "description": "STUN/TURN UDP", "optional": false, "remappable": false, "max_instances_per_node": 1 },
-      { "port": 3478, "protocol": "TCP", "component": "coturn", "description": "STUN/TURN TCP", "optional": false, "remappable": false, "max_instances_per_node": 1 },
-      { "port": 5349, "protocol": "TCP", "component": "coturn", "description": "TURN over TLS", "optional": true, "remappable": false, "max_instances_per_node": 1 }
+      {
+        "port": 3478,
+        "protocol": "UDP",
+        "component": "coturn",
+        "description": "STUN/TURN UDP",
+        "optional": false,
+        "remappable": false,
+        "max_instances_per_node": 1
+      },
+      {
+        "port": 3478,
+        "protocol": "TCP",
+        "component": "coturn",
+        "description": "STUN/TURN TCP",
+        "optional": false,
+        "remappable": false,
+        "max_instances_per_node": 1
+      },
+      {
+        "port": 5349,
+        "protocol": "TCP",
+        "component": "coturn",
+        "description": "TURN over TLS",
+        "optional": true,
+        "remappable": false,
+        "max_instances_per_node": 1
+      }
     ],
     "websocket": false,
     "notes": "Requires hostPort for STUN/TURN. UDP relay ports (49152-49200) also exposed via hostPort range. Only 1 instance per node."
   },
   "volumes": [],
   "resources": {
-    "default": { "cpu": "0.25", "memory": "128Mi", "storage": "0Mi" },
-    "minimum": { "cpu": "0.10", "memory": "64Mi", "storage": "0Mi" }
+    "default": {
+      "cpu": "0.25",
+      "memory": "128Mi",
+      "storage": "0Mi"
+    },
+    "minimum": {
+      "cpu": "0.10",
+      "memory": "64Mi",
+      "storage": "0Mi"
+    }
   },
   "health_check": {
     "path": "/health",
@@ -40,13 +85,55 @@
     "period_seconds": 10
   },
   "parameters": [
-    { "key": "coturn.realm", "label": "TURN Realm (domain)", "type": "string", "required": true },
-    { "key": "coturn.authSecret", "label": "TURN Shared Secret", "type": "secret", "required": true },
-    { "key": "coturn.publicIP", "label": "Public IP Address", "type": "string", "required": true, "description": "Server's public IPv4 address for STUN responses" },
-    { "key": "coturn.minPort", "label": "Relay Port Range Start", "type": "integer", "default": 49152 },
-    { "key": "coturn.maxPort", "label": "Relay Port Range End", "type": "integer", "default": 49200 },
-    { "key": "coturn.tlsEnabled", "label": "Enable TURN over TLS (port 5349)", "type": "boolean", "default": false },
-    { "key": "coturn.maxBandwidth", "label": "Max Bandwidth per Session (bps)", "type": "integer", "default": 10000000 }
+    {
+      "key": "coturn.realm",
+      "label": "TURN Realm (domain)",
+      "type": "string",
+      "required": true
+    },
+    {
+      "key": "coturn.authSecret",
+      "label": "TURN Shared Secret",
+      "type": "secret",
+      "required": true
+    },
+    {
+      "key": "coturn.publicIP",
+      "label": "Public IP Address",
+      "type": "string",
+      "required": true,
+      "description": "Server's public IPv4 address for STUN responses"
+    },
+    {
+      "key": "coturn.minPort",
+      "label": "Relay Port Range Start",
+      "type": "integer",
+      "default": 49152
+    },
+    {
+      "key": "coturn.maxPort",
+      "label": "Relay Port Range End",
+      "type": "integer",
+      "default": 49200
+    },
+    {
+      "key": "coturn.tlsEnabled",
+      "label": "Enable TURN over TLS (port 5349)",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "key": "coturn.maxBandwidth",
+      "label": "Max Bandwidth per Session (bps)",
+      "type": "integer",
+      "default": 10000000
+    }
   ],
-  "tags": ["turn", "stun", "webrtc", "nat-traversal", "communication"]
+  "tags": [
+    "turn",
+    "stun",
+    "webrtc",
+    "nat-traversal",
+    "communication"
+  ]
 }

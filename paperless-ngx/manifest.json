@@ -2,17 +2,22 @@
   "name": "Paperless-ngx",
   "code": "paperless-ngx",
   "version": "2",
-  "description": "Community-maintained document management system that transforms physical documents into a searchable online archive with OCR, tagging, and full-text search.",
+  "description": "Go paperless — scan, tag, and search all your documents from one organized digital archive.",
   "category": "productivity",
-  "min_plan": "business",
-  "tenancy": ["single-tenant"],
+  "tenancy": [
+    "single-tenant"
+  ],
   "components": [
     {
       "name": "paperless",
       "type": "deployment",
       "image": "ghcr.io/paperless-ngx/paperless-ngx:latest",
       "ports": [
-        { "port": 8000, "protocol": "TCP", "ingress": true }
+        {
+          "port": 8000,
+          "protocol": "TCP",
+          "ingress": true
+        }
       ]
     },
     {
@@ -20,7 +25,10 @@
       "type": "statefulset",
       "image": "postgres:16-alpine",
       "ports": [
-        { "port": 5432, "protocol": "TCP" }
+        {
+          "port": 5432,
+          "protocol": "TCP"
+        }
       ]
     },
     {
@@ -28,7 +36,10 @@
       "type": "deployment",
       "image": "redis:7-alpine",
       "ports": [
-        { "port": 6379, "protocol": "TCP" }
+        {
+          "port": 6379,
+          "protocol": "TCP"
+        }
       ]
     }
   ],
@@ -162,5 +173,10 @@
       "description": "SMTP authentication password"
     }
   ],
-  "tags": ["documents", "ocr", "paperless", "productivity"]
+  "tags": [
+    "documents",
+    "ocr",
+    "paperless",
+    "productivity"
+  ]
 }

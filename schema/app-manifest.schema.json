@@ -10,7 +10,6 @@
     "version",
     "description",
     "category",
-    "min_plan",
     "tenancy",
     "components",
     "networking",
@@ -67,11 +66,6 @@
         "billing",
         "other"
       ]
-    },
-    "min_plan": {
-      "type": "string",
-      "description": "Minimum hosting plan required",
-      "enum": ["starter", "business", "premium"]
     },
     "tenancy": {
       "type": "array",

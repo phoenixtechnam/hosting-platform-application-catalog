@@ -2,43 +2,89 @@
   "name": "Gitea",
   "code": "gitea",
   "version": "1.22",
-  "description": "Managed Gitea Git hosting platform with PostgreSQL",
+  "description": "A lightweight, self-hosted Git service for managing your code repositories and team collaboration.",
   "category": "devtools",
-  "min_plan": "starter",
-  "tenancy": ["multi-tenant"],
+  "tenancy": [
+    "multi-tenant"
+  ],
   "components": [
     {
       "name": "gitea",
       "type": "deployment",
       "image": "gitea/gitea:1.22",
       "ports": [
-        { "port": 3000, "protocol": "TCP", "ingress": true },
-        { "port": 22, "protocol": "TCP", "ingress": false }
+        {
+          "port": 3000,
+          "protocol": "TCP",
+          "ingress": true
+        },
+        {
+          "port": 22,
+          "protocol": "TCP",
+          "ingress": false
+        }
       ]
     },
     {
       "name": "postgresql",
       "type": "statefulset",
       "image": "postgres:16-alpine",
-      "ports": [{ "port": 5432, "protocol": "TCP", "ingress": false }]
+      "ports": [
+        {
+          "port": 5432,
+          "protocol": "TCP",
+          "ingress": false
+        }
+      ]
     }
   ],
   "networking": {
     "ingress_ports": [
-      { "port": 443, "protocol": "TCP", "tls": true, "description": "Web UI and Git HTTP" }
+      {
+        "port": 443,
+        "protocol": "TCP",
+        "tls": true,
+        "description": "Web UI and Git HTTP"
+      }
     ],
     "host_ports": [
-      { "port": 2222, "protocol": "TCP", "component": "gitea", "description": "Git SSH access", "optional": true, "remappable": true, "max_instances_per_node": 1 }
+      {
+        "port": 2222,
+        "protocol": "TCP",
+        "component": "gitea",
+        "description": "Git SSH access",
+        "optional": true,
+        "remappable": true,
+        "max_instances_per_node": 1
+      }
     ],
     "websocket": false
   },
   "volumes": [
-    { "name": "gitea-data", "mount_path": "/data", "default_size": "10Gi", "description": "Gitea repositories and data" },
-    { "name": "db-data", "mount_path": "/var/lib/postgresql/data", "default_size": "5Gi", "description": "PostgreSQL data directory" }
+    {
+      "name": "gitea-data",
+      "mount_path": "/data",
+      "default_size": "10Gi",
+      "description": "Gitea repositories and data"
+    },
+    {
+      "name": "db-data",
+      "mount_path": "/var/lib/postgresql/data",
+      "default_size": "5Gi",
+      "description": "PostgreSQL data directory"
+    }
   ],
   "resources": {
-    "default": { "cpu": "0.50", "memory": "512Mi", "storage": "15Gi" },
-    "minimum": { "cpu": "0.25", "memory": "256Mi", "storage": "5Gi" }
+    "default": {
+      "cpu": "0.50",
+      "memory": "512Mi",
+      "storage": "15Gi"
+    },
+    "minimum": {
+      "cpu": "0.25",
+      "memory": "256Mi",
+      "storage": "5Gi"
+    }
   },
   "health_check": {
     "path": "/api/healthz",
@@ -47,14 +93,60 @@
     "period_seconds": 30
   },
   "parameters": [
-    { "key": "ingress.domain", "label": "Domain", "type": "string", "required": true },
-    { "key": "gitea.adminUser", "label": "Admin Username", "type": "string", "default": "gitea_admin", "required": true },
-    { "key": "gitea.adminPassword", "label": "Admin Password", "type": "secret", "required": true },
-    { "key": "gitea.adminEmail", "label": "Admin Email", "type": "string", "required": true },
-    { "key": "gitea.sshEnabled", "label": "Enable SSH Access", "type": "boolean", "default": true },
-    { "key": "gitea.lfsEnabled", "label": "Enable Git LFS", "type": "boolean", "default": true },
-    { "key": "postgresql.storageSize", "label": "Database Storage Size", "type": "string", "default": "5Gi" },
-    { "key": "giteaData.storageSize", "label": "Repository Storage Size", "type": "string", "default": "10Gi" }
+    {
+      "key": "ingress.domain",
+      "label": "Domain",
+      "type": "string",
+      "required": true
+    },
+    {
+      "key": "gitea.adminUser",
+      "label": "Admin Username",
+      "type": "string",
+      "default": "gitea_admin",
+      "required": true
+    },
+    {
+      "key": "gitea.adminPassword",
+      "label": "Admin Password",
+      "type": "secret",
+      "required": true
+    },
+    {
+      "key": "gitea.adminEmail",
+      "label": "Admin Email",
+      "type": "string",
+      "required": true
+    },
+    {
+      "key": "gitea.sshEnabled",
+      "label": "Enable SSH Access",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "key": "gitea.lfsEnabled",
+      "label": "Enable Git LFS",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "key": "postgresql.storageSize",
+      "label": "Database Storage Size",
+      "type": "string",
+      "default": "5Gi"
+    },
+    {
+      "key": "giteaData.storageSize",
+      "label": "Repository Storage Size",
+      "type": "string",
+      "default": "10Gi"
+    }
   ],
-  "tags": ["git", "devtools", "gitea", "code"]
+  "tags": [
+    "git",
+    "devtools",
+    "gitea",
+    "code"
+  ]
 }

@@ -2,17 +2,22 @@
   "name": "Directus",
   "code": "directus",
   "version": "11",
-  "description": "Open-source data platform providing an instant REST and GraphQL API, intuitive admin dashboard, and flexible data model for any SQL database.",
+  "description": "Turn any SQL database into a modern admin dashboard and API — no coding required.",
   "category": "cms",
-  "min_plan": "starter",
-  "tenancy": ["single-tenant"],
+  "tenancy": [
+    "single-tenant"
+  ],
   "components": [
     {
       "name": "directus",
       "type": "deployment",
       "image": "directus/directus:11",
       "ports": [
-        { "port": 8055, "protocol": "TCP", "ingress": true }
+        {
+          "port": 8055,
+          "protocol": "TCP",
+          "ingress": true
+        }
       ]
     },
     {
@@ -20,7 +25,10 @@
       "type": "statefulset",
       "image": "postgres:16-alpine",
       "ports": [
-        { "port": 5432, "protocol": "TCP" }
+        {
+          "port": 5432,
+          "protocol": "TCP"
+        }
       ]
     }
   ],
@@ -110,5 +118,11 @@
       "description": "PostgreSQL database password"
     }
   ],
-  "tags": ["cms", "headless", "directus", "api", "dashboard"]
+  "tags": [
+    "cms",
+    "headless",
+    "directus",
+    "api",
+    "dashboard"
+  ]
 }

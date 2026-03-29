@@ -2,17 +2,22 @@
   "name": "Invoice Ninja",
   "code": "invoiceninja",
   "version": "5",
-  "description": "Open-source invoicing, payments, expenses, and time-tracking platform built for freelancers and small businesses.",
+  "description": "Create professional invoices, track payments, manage expenses, and accept online payments.",
   "category": "ecommerce",
-  "min_plan": "starter",
-  "tenancy": ["single-tenant"],
+  "tenancy": [
+    "single-tenant"
+  ],
   "components": [
     {
       "name": "invoiceninja",
       "type": "deployment",
       "image": "invoiceninja/invoiceninja:5",
       "ports": [
-        { "port": 80, "protocol": "TCP", "ingress": true }
+        {
+          "port": 80,
+          "protocol": "TCP",
+          "ingress": true
+        }
       ]
     },
     {
@@ -20,7 +25,10 @@
       "type": "statefulset",
       "image": "mariadb:10.11",
       "ports": [
-        { "port": 3306, "protocol": "TCP" }
+        {
+          "port": 3306,
+          "protocol": "TCP"
+        }
       ]
     }
   ],
@@ -141,5 +149,10 @@
       "description": "SMTP authentication password"
     }
   ],
-  "tags": ["invoicing", "billing", "invoiceninja", "accounting"]
+  "tags": [
+    "invoicing",
+    "billing",
+    "invoiceninja",
+    "accounting"
+  ]
 }

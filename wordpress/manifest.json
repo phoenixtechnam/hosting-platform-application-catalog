@@ -2,28 +2,47 @@
   "name": "WordPress",
   "code": "wordpress",
   "version": "6.7",
-  "description": "Managed WordPress CMS with MariaDB, Redis object cache, and WP-CLI scheduled maintenance",
+  "description": "Create and manage your own website or blog with the world's most popular content management system.",
   "category": "cms",
-  "min_plan": "starter",
-  "tenancy": ["single-tenant"],
+  "tenancy": [
+    "single-tenant"
+  ],
   "components": [
     {
       "name": "wordpress",
       "type": "deployment",
       "image": "wordpress:6.7-php8.4-apache",
-      "ports": [{ "port": 80, "protocol": "TCP", "ingress": true }]
+      "ports": [
+        {
+          "port": 80,
+          "protocol": "TCP",
+          "ingress": true
+        }
+      ]
     },
     {
       "name": "mariadb",
       "type": "statefulset",
       "image": "mariadb:10.11",
-      "ports": [{ "port": 3306, "protocol": "TCP", "ingress": false }]
+      "ports": [
+        {
+          "port": 3306,
+          "protocol": "TCP",
+          "ingress": false
+        }
+      ]
     },
     {
       "name": "redis",
       "type": "deployment",
       "image": "redis:7-alpine",
-      "ports": [{ "port": 6379, "protocol": "TCP", "ingress": false }],
+      "ports": [
+        {
+          "port": 6379,
+          "protocol": "TCP",
+          "ingress": false
+        }
+      ],
       "optional": true
     },
     {
@@ -36,18 +55,41 @@
   ],
   "networking": {
     "ingress_ports": [
-      { "port": 443, "protocol": "TCP", "tls": true, "description": "Web UI and REST API" }
+      {
+        "port": 443,
+        "protocol": "TCP",
+        "tls": true,
+        "description": "Web UI and REST API"
+      }
     ],
     "host_ports": [],
     "websocket": false
   },
   "volumes": [
-    { "name": "wp-content", "mount_path": "/var/www/html/wp-content", "default_size": "10Gi", "description": "Themes, plugins, uploads, and media files" },
-    { "name": "db-data", "mount_path": "/var/lib/mysql", "default_size": "5Gi", "description": "MariaDB data directory" }
+    {
+      "name": "wp-content",
+      "mount_path": "/var/www/html/wp-content",
+      "default_size": "10Gi",
+      "description": "Themes, plugins, uploads, and media files"
+    },
+    {
+      "name": "db-data",
+      "mount_path": "/var/lib/mysql",
+      "default_size": "5Gi",
+      "description": "MariaDB data directory"
+    }
   ],
   "resources": {
-    "default": { "cpu": "0.50", "memory": "512Mi", "storage": "15Gi" },
-    "minimum": { "cpu": "0.25", "memory": "256Mi", "storage": "5Gi" }
+    "default": {
+      "cpu": "0.50",
+      "memory": "512Mi",
+      "storage": "15Gi"
+    },
+    "minimum": {
+      "cpu": "0.25",
+      "memory": "256Mi",
+      "storage": "5Gi"
+    }
   },
   "health_check": {
     "path": "/wp-login.php",
@@ -56,22 +98,111 @@
     "period_seconds": 30
   },
   "parameters": [
-    { "key": "wordpress.siteTitle", "label": "Site Title", "type": "string", "default": "My WordPress Site", "required": true },
-    { "key": "wordpress.adminUser", "label": "Admin Username", "type": "string", "default": "admin", "required": true },
-    { "key": "wordpress.adminPassword", "label": "Admin Password", "type": "secret", "required": true },
-    { "key": "wordpress.adminEmail", "label": "Admin Email", "type": "string", "required": true },
-    { "key": "ingress.domain", "label": "Domain", "type": "string", "required": true },
-    { "key": "wordpress.phpMemoryLimit", "label": "PHP Memory Limit", "type": "string", "default": "256M" },
-    { "key": "wordpress.uploadMaxSize", "label": "Upload Max Size", "type": "string", "default": "64M" },
-    { "key": "wordpress.maxExecutionTime", "label": "Max Execution Time (seconds)", "type": "integer", "default": 300 },
-    { "key": "redis.enabled", "label": "Enable Redis Object Cache", "type": "boolean", "default": true },
-    { "key": "cron.enabled", "label": "Enable WP-Cron via Kubernetes", "type": "boolean", "default": true },
-    { "key": "mariadb.storageSize", "label": "Database Storage Size", "type": "string", "default": "5Gi" },
-    { "key": "wpContent.storageSize", "label": "Content Storage Size", "type": "string", "default": "10Gi" },
-    { "key": "smtp.host", "label": "SMTP Server", "type": "string", "required": false },
-    { "key": "smtp.port", "label": "SMTP Port", "type": "integer", "default": 587, "required": false },
-    { "key": "smtp.username", "label": "SMTP Username", "type": "string", "required": false },
-    { "key": "smtp.password", "label": "SMTP Password", "type": "secret", "required": false }
+    {
+      "key": "wordpress.siteTitle",
+      "label": "Site Title",
+      "type": "string",
+      "default": "My WordPress Site",
+      "required": true
+    },
+    {
+      "key": "wordpress.adminUser",
+      "label": "Admin Username",
+      "type": "string",
+      "default": "admin",
+      "required": true
+    },
+    {
+      "key": "wordpress.adminPassword",
+      "label": "Admin Password",
+      "type": "secret",
+      "required": true
+    },
+    {
+      "key": "wordpress.adminEmail",
+      "label": "Admin Email",
+      "type": "string",
+      "required": true
+    },
+    {
+      "key": "ingress.domain",
+      "label": "Domain",
+      "type": "string",
+      "required": true
+    },
+    {
+      "key": "wordpress.phpMemoryLimit",
+      "label": "PHP Memory Limit",
+      "type": "string",
+      "default": "256M"
+    },
+    {
+      "key": "wordpress.uploadMaxSize",
+      "label": "Upload Max Size",
+      "type": "string",
+      "default": "64M"
+    },
+    {
+      "key": "wordpress.maxExecutionTime",
+      "label": "Max Execution Time (seconds)",
+      "type": "integer",
+      "default": 300
+    },
+    {
+      "key": "redis.enabled",
+      "label": "Enable Redis Object Cache",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "key": "cron.enabled",
+      "label": "Enable WP-Cron via Kubernetes",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "key": "mariadb.storageSize",
+      "label": "Database Storage Size",
+      "type": "string",
+      "default": "5Gi"
+    },
+    {
+      "key": "wpContent.storageSize",
+      "label": "Content Storage Size",
+      "type": "string",
+      "default": "10Gi"
+    },
+    {
+      "key": "smtp.host",
+      "label": "SMTP Server",
+      "type": "string",
+      "required": false
+    },
+    {
+      "key": "smtp.port",
+      "label": "SMTP Port",
+      "type": "integer",
+      "default": 587,
+      "required": false
+    },
+    {
+      "key": "smtp.username",
+      "label": "SMTP Username",
+      "type": "string",
+      "required": false
+    },
+    {
+      "key": "smtp.password",
+      "label": "SMTP Password",
+      "type": "secret",
+      "required": false
+    }
   ],
-  "tags": ["cms", "wordpress", "php", "blog", "website"]
+  "tags": [
+    "cms",
+    "wordpress",
+    "php",
+    "blog",
+    "website"
+  ]
 }
