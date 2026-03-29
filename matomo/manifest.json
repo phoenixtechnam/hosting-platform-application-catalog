@@ -2,7 +2,9 @@
     "name": "Matomo",
     "code": "matomo",
     "version": "5",
-    "description": "Track your website visitors with full privacy \u2014 a Google Analytics alternative you own and control.",
+    "description": "Track your website visitors with full privacy — a Google Analytics alternative you own and control.",
+    "url": "https://matomo.org",
+    "documentation": "https://matomo.org/guides/",
     "category": "analytics",
     "tenancy": [
         "multi-tenant"

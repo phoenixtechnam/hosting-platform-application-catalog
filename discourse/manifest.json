@@ -3,6 +3,8 @@
     "code": "discourse",
     "version": "3",
     "description": "Build an online community with modern discussion forums, categories, and user engagement features.",
+    "url": "https://www.discourse.org",
+    "documentation": "https://meta.discourse.org/docs",
     "category": "community",
     "tenancy": [
         "single-tenant"

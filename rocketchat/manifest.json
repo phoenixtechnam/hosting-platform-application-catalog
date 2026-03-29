@@ -3,6 +3,8 @@
     "code": "rocketchat",
     "version": "7",
     "description": "Team messaging and collaboration with channels, direct messages, video calls, and file sharing.",
+    "url": "https://www.rocket.chat",
+    "documentation": "https://docs.rocket.chat",
     "category": "communication",
     "tenancy": [
         "single-tenant"

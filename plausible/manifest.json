@@ -3,6 +3,8 @@
     "code": "plausible",
     "version": "2.0",
     "description": "Simple, privacy-friendly website analytics that show you what matters without tracking individuals.",
+    "url": "https://plausible.io",
+    "documentation": "https://plausible.io/docs",
     "category": "analytics",
     "tenancy": [
         "multi-tenant"

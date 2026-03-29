@@ -3,6 +3,8 @@
     "code": "gitea",
     "version": "1.22",
     "description": "A lightweight, self-hosted Git service for managing your code repositories and team collaboration.",
+    "url": "https://about.gitea.com",
+    "documentation": "https://docs.gitea.com",
     "category": "devtools",
     "tenancy": [
         "multi-tenant"

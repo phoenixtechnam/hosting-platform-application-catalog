@@ -3,6 +3,8 @@
     "code": "strapi",
     "version": "5",
     "description": "Build and manage your content with a flexible headless CMS that powers websites, apps, and more.",
+    "url": "https://strapi.io",
+    "documentation": "https://docs.strapi.io",
     "category": "cms",
     "tenancy": [
         "single-tenant"

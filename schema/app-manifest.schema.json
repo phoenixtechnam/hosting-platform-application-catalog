@@ -44,6 +44,16 @@
       "minLength": 1,
       "maxLength": 500
     },
+    "url": {
+      "type": "string",
+      "description": "Official website or repository URL",
+      "format": "uri"
+    },
+    "documentation": {
+      "type": "string",
+      "description": "Official documentation URL",
+      "format": "uri"
+    },
     "category": {
       "type": "string",
       "description": "Application category for grouping in the UI",

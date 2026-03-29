@@ -3,6 +3,8 @@
     "code": "prestashop",
     "version": "8",
     "description": "Launch your own online store with product management, payments, and shipping built in.",
+    "url": "https://www.prestashop.com",
+    "documentation": "https://docs.prestashop-project.org",
     "category": "ecommerce",
     "tenancy": [
         "single-tenant"

@@ -3,6 +3,8 @@
     "code": "n8n",
     "version": "latest",
     "description": "Automate repetitive tasks by connecting your apps and services with visual drag-and-drop workflows.",
+    "url": "https://n8n.io",
+    "documentation": "https://docs.n8n.io",
     "category": "automation",
     "tenancy": [
         "single-tenant"

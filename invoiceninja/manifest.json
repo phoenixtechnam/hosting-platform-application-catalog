@@ -3,6 +3,8 @@
     "code": "invoiceninja",
     "version": "5",
     "description": "Create professional invoices, track payments, manage expenses, and accept online payments.",
+    "url": "https://invoiceninja.com",
+    "documentation": "https://invoiceninja.github.io",
     "category": "ecommerce",
     "tenancy": [
         "single-tenant"

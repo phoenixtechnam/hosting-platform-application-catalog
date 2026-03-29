@@ -3,6 +3,8 @@
     "code": "bookstack",
     "version": "latest",
     "description": "Organize your team's knowledge with an easy-to-use wiki that anyone can edit and search.",
+    "url": "https://www.bookstackapp.com",
+    "documentation": "https://www.bookstackapp.com/docs/",
     "category": "documentation",
     "tenancy": [
         "single-tenant"

@@ -3,6 +3,8 @@
     "code": "moodle-bitnami",
     "version": "4.5",
     "description": "Run online courses, quizzes, and training programs with this full-featured learning platform.",
+    "url": "https://moodle.org",
+    "documentation": "https://docs.moodle.org",
     "category": "education",
     "tenancy": [
         "single-tenant"

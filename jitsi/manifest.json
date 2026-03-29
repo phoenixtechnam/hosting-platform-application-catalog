@@ -2,7 +2,9 @@
     "name": "Jitsi Meet",
     "code": "jitsi",
     "version": "stable-9823",
-    "description": "Host secure video meetings and conferences on your own server \u2014 no account required for participants.",
+    "description": "Host secure video meetings and conferences on your own server — no account required for participants.",
+    "url": "https://jitsi.org",
+    "documentation": "https://jitsi.github.io/handbook/",
     "category": "communication",
     "tenancy": [
         "single-tenant"

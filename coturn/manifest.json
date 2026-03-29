@@ -3,6 +3,8 @@
   "code": "coturn",
   "version": "4.6",
   "description": "A TURN/STUN relay server that ensures video calls work reliably across firewalls and networks.",
+  "url": "https://github.com/coturn/coturn",
+  "documentation": "https://github.com/coturn/coturn/wiki",
   "category": "communication",
   "tenancy": [
     "single-tenant"

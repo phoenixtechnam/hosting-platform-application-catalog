@@ -3,6 +3,8 @@
     "code": "vaultwarden",
     "version": "latest",
     "description": "Store and sync all your passwords securely across devices with this Bitwarden-compatible vault.",
+    "url": "https://github.com/dani-garcia/vaultwarden",
+    "documentation": "https://github.com/dani-garcia/vaultwarden/wiki",
     "category": "security",
     "tenancy": [
         "multi-tenant"

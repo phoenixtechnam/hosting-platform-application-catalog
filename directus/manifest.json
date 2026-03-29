@@ -2,7 +2,9 @@
     "name": "Directus",
     "code": "directus",
     "version": "11",
-    "description": "Turn any SQL database into a modern admin dashboard and API \u2014 no coding required.",
+    "description": "Turn any SQL database into a modern admin dashboard and API — no coding required.",
+    "url": "https://directus.io",
+    "documentation": "https://docs.directus.io",
     "category": "cms",
     "tenancy": [
         "single-tenant"

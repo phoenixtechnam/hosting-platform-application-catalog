@@ -2,7 +2,9 @@
     "name": "Paperless-ngx",
     "code": "paperless-ngx",
     "version": "2",
-    "description": "Go paperless \u2014 scan, tag, and search all your documents from one organized digital archive.",
+    "description": "Go paperless — scan, tag, and search all your documents from one organized digital archive.",
+    "url": "https://docs.paperless-ngx.com",
+    "documentation": "https://docs.paperless-ngx.com/setup/",
     "category": "productivity",
     "tenancy": [
         "single-tenant"

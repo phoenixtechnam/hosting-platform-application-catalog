@@ -3,6 +3,8 @@
     "code": "wordpress",
     "version": "6.7",
     "description": "Create and manage your own website or blog with the world's most popular content management system.",
+    "url": "https://wordpress.org",
+    "documentation": "https://developer.wordpress.org/advanced-administration/",
     "category": "cms",
     "tenancy": [
         "single-tenant"

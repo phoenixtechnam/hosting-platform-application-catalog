@@ -3,6 +3,8 @@
     "code": "wiki-js",
     "version": "2.5",
     "description": "A modern, fast wiki for your team with markdown editing, access control, and full-text search.",
+    "url": "https://js.wiki",
+    "documentation": "https://docs.requarks.io",
     "category": "documentation",
     "tenancy": [
         "single-tenant"

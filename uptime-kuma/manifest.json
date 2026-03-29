@@ -3,6 +3,8 @@
     "code": "uptime-kuma",
     "version": "1",
     "description": "Monitor your websites and services with instant alerts when something goes down.",
+    "url": "https://uptime.kuma.pet",
+    "documentation": "https://github.com/louislam/uptime-kuma/wiki",
     "category": "monitoring",
     "tenancy": [
         "multi-tenant"
