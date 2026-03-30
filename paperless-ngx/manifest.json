@@ -2,7 +2,7 @@
     "name": "Paperless-ngx",
     "code": "paperless-ngx",
     "version": "2.20.13",
-    "description": "Go paperless — scan, tag, and search all your documents from one organized digital archive.",
+    "description": "Go paperless \u2014 scan, tag, and search all your documents from one organized digital archive.",
     "url": "https://docs.paperless-ngx.com",
     "documentation": "https://docs.paperless-ngx.com/setup/",
     "category": "productivity",
@@ -185,7 +185,10 @@
         {
             "version": "2.19.0",
             "components": [
-                { "name": "paperless", "image": "ghcr.io/paperless-ngx/paperless-ngx:2.19.0" }
+                {
+                    "name": "paperless",
+                    "image": "ghcr.io/paperless-ngx/paperless-ngx:2.19.0"
+                }
             ],
             "eolDate": "2026-09-30",
             "migrationNotes": "Paperless-ngx 2.19.0 reaches end-of-life September 2026. Upgrade to 2.20.13.",
@@ -194,9 +197,14 @@
         {
             "version": "2.20.13",
             "components": [
-                { "name": "paperless", "image": "ghcr.io/paperless-ngx/paperless-ngx:2.20.13" }
+                {
+                    "name": "paperless",
+                    "image": "ghcr.io/paperless-ngx/paperless-ngx:2.20.13"
+                }
             ],
-            "upgradeFrom": ["2.19.0"],
+            "upgradeFrom": [
+                "2.19.0"
+            ],
             "isDefault": true
         }
     ]

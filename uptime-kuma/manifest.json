@@ -84,7 +84,10 @@
         {
             "version": "1",
             "components": [
-                { "name": "uptime-kuma", "image": "louislam/uptime-kuma:1" }
+                {
+                    "name": "uptime-kuma",
+                    "image": "louislam/uptime-kuma:1"
+                }
             ],
             "eolDate": "2026-09-30",
             "migrationNotes": "Uptime Kuma 1.x reaches end-of-life September 2026. Upgrade to 2.x.",
@@ -93,9 +96,14 @@
         {
             "version": "2",
             "components": [
-                { "name": "uptime-kuma", "image": "louislam/uptime-kuma:2" }
+                {
+                    "name": "uptime-kuma",
+                    "image": "louislam/uptime-kuma:2"
+                }
             ],
-            "upgradeFrom": ["1"],
+            "upgradeFrom": [
+                "1"
+            ],
             "breakingChanges": "Major version upgrade. Node.js runtime updated.",
             "isDefault": true
         }

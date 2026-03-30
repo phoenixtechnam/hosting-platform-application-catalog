@@ -140,7 +140,10 @@
         {
             "version": "25.12.1",
             "components": [
-                { "name": "bookstack", "image": "lscr.io/linuxserver/bookstack:v25.12.1" }
+                {
+                    "name": "bookstack",
+                    "image": "lscr.io/linuxserver/bookstack:v25.12.1"
+                }
             ],
             "eolDate": "2026-09-30",
             "isDefault": false
@@ -148,9 +151,14 @@
         {
             "version": "26.03.2",
             "components": [
-                { "name": "bookstack", "image": "lscr.io/linuxserver/bookstack:v26.03.2" }
+                {
+                    "name": "bookstack",
+                    "image": "lscr.io/linuxserver/bookstack:v26.03.2"
+                }
             ],
-            "upgradeFrom": ["25.12.1"],
+            "upgradeFrom": [
+                "25.12.1"
+            ],
             "isDefault": true
         }
     ]

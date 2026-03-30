@@ -161,7 +161,10 @@
         {
             "version": "4",
             "components": [
-                { "name": "invoiceninja", "image": "invoiceninja/invoiceninja:4" }
+                {
+                    "name": "invoiceninja",
+                    "image": "invoiceninja/invoiceninja:4"
+                }
             ],
             "eolDate": "2026-09-30",
             "migrationNotes": "Invoice Ninja v4 reaches end-of-life September 2026. Upgrade to v5.",
@@ -170,9 +173,14 @@
         {
             "version": "5",
             "components": [
-                { "name": "invoiceninja", "image": "invoiceninja/invoiceninja:5" }
+                {
+                    "name": "invoiceninja",
+                    "image": "invoiceninja/invoiceninja:5"
+                }
             ],
-            "upgradeFrom": ["4"],
+            "upgradeFrom": [
+                "4"
+            ],
             "breakingChanges": "Major version upgrade from Invoice Ninja v4 to v5. Data migration required.",
             "isDefault": true
         }

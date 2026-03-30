@@ -164,7 +164,10 @@
         {
             "version": "2.1",
             "components": [
-                { "name": "plausible", "image": "ghcr.io/plausible/community-edition:v2.1" }
+                {
+                    "name": "plausible",
+                    "image": "ghcr.io/plausible/community-edition:v2.1"
+                }
             ],
             "eolDate": "2026-09-30",
             "migrationNotes": "Plausible 2.1 reaches end-of-life September 2026. Upgrade to 3.0.",
@@ -173,9 +176,14 @@
         {
             "version": "3.0",
             "components": [
-                { "name": "plausible", "image": "ghcr.io/plausible/community-edition:v3" }
+                {
+                    "name": "plausible",
+                    "image": "ghcr.io/plausible/community-edition:v3"
+                }
             ],
-            "upgradeFrom": ["2.1"],
+            "upgradeFrom": [
+                "2.1"
+            ],
             "breakingChanges": "Major version upgrade from 2.x to 3.x. Configuration changes required.",
             "isDefault": true
         }

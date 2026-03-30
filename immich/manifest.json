@@ -2,7 +2,7 @@
     "name": "Immich",
     "code": "immich",
     "version": "2.6.3",
-    "description": "Back up and browse your photos and videos privately — a self-hosted Google Photos alternative.",
+    "description": "Back up and browse your photos and videos privately \u2014 a self-hosted Google Photos alternative.",
     "url": "https://immich.app",
     "documentation": "https://immich.app/docs/overview/introduction",
     "category": "media",
@@ -158,8 +158,14 @@
         {
             "version": "2.5.0",
             "components": [
-                { "name": "immich-server", "image": "ghcr.io/immich-app/immich-server:v2.5.0" },
-                { "name": "immich-ml", "image": "ghcr.io/immich-app/immich-machine-learning:v2.5.0" }
+                {
+                    "name": "immich-server",
+                    "image": "ghcr.io/immich-app/immich-server:v2.5.0"
+                },
+                {
+                    "name": "immich-ml",
+                    "image": "ghcr.io/immich-app/immich-machine-learning:v2.5.0"
+                }
             ],
             "eolDate": "2026-09-30",
             "migrationNotes": "Immich 2.5.0 reaches end-of-life September 2026. Upgrade to 2.6.3.",
@@ -168,10 +174,18 @@
         {
             "version": "2.6.3",
             "components": [
-                { "name": "immich-server", "image": "ghcr.io/immich-app/immich-server:v2.6.3" },
-                { "name": "immich-ml", "image": "ghcr.io/immich-app/immich-machine-learning:v2.6.3" }
+                {
+                    "name": "immich-server",
+                    "image": "ghcr.io/immich-app/immich-server:v2.6.3"
+                },
+                {
+                    "name": "immich-ml",
+                    "image": "ghcr.io/immich-app/immich-machine-learning:v2.6.3"
+                }
             ],
-            "upgradeFrom": ["2.5.0"],
+            "upgradeFrom": [
+                "2.5.0"
+            ],
             "isDefault": true
         }
     ]

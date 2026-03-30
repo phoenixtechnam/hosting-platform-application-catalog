@@ -155,7 +155,10 @@
         {
             "version": "1.24",
             "components": [
-                { "name": "gitea", "image": "gitea/gitea:1.24" }
+                {
+                    "name": "gitea",
+                    "image": "gitea/gitea:1.24"
+                }
             ],
             "eolDate": "2026-09-30",
             "isDefault": false
@@ -163,9 +166,14 @@
         {
             "version": "1.25",
             "components": [
-                { "name": "gitea", "image": "gitea/gitea:1.25" }
+                {
+                    "name": "gitea",
+                    "image": "gitea/gitea:1.25"
+                }
             ],
-            "upgradeFrom": ["1.24"],
+            "upgradeFrom": [
+                "1.24"
+            ],
             "isDefault": true
         }
     ]

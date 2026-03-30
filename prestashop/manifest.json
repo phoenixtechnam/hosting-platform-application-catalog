@@ -159,7 +159,10 @@
         {
             "version": "8",
             "components": [
-                { "name": "prestashop", "image": "prestashop/prestashop:8" }
+                {
+                    "name": "prestashop",
+                    "image": "prestashop/prestashop:8"
+                }
             ],
             "eolDate": "2026-09-30",
             "isDefault": false
@@ -167,9 +170,14 @@
         {
             "version": "9",
             "components": [
-                { "name": "prestashop", "image": "prestashop/prestashop:9" }
+                {
+                    "name": "prestashop",
+                    "image": "prestashop/prestashop:9"
+                }
             ],
-            "upgradeFrom": ["8"],
+            "upgradeFrom": [
+                "8"
+            ],
             "breakingChanges": "Major version upgrade. Review theme and module compatibility.",
             "isDefault": true
         }

@@ -2,7 +2,7 @@
     "name": "Jitsi Meet",
     "code": "jitsi",
     "version": "stable-10741",
-    "description": "Host secure video meetings and conferences on your own server — no account required for participants.",
+    "description": "Host secure video meetings and conferences on your own server \u2014 no account required for participants.",
     "url": "https://jitsi.org",
     "documentation": "https://jitsi.github.io/handbook/",
     "category": "communication",
@@ -223,10 +223,22 @@
         {
             "version": "stable-10522",
             "components": [
-                { "name": "web", "image": "jitsi/web:stable-10522" },
-                { "name": "prosody", "image": "jitsi/prosody:stable-10522" },
-                { "name": "jicofo", "image": "jitsi/jicofo:stable-10522" },
-                { "name": "jvb", "image": "jitsi/jvb:stable-10522" }
+                {
+                    "name": "web",
+                    "image": "jitsi/web:stable-10522"
+                },
+                {
+                    "name": "prosody",
+                    "image": "jitsi/prosody:stable-10522"
+                },
+                {
+                    "name": "jicofo",
+                    "image": "jitsi/jicofo:stable-10522"
+                },
+                {
+                    "name": "jvb",
+                    "image": "jitsi/jvb:stable-10522"
+                }
             ],
             "eolDate": "2026-09-30",
             "isDefault": false
@@ -234,12 +246,26 @@
         {
             "version": "stable-10741",
             "components": [
-                { "name": "web", "image": "jitsi/web:stable-10741" },
-                { "name": "prosody", "image": "jitsi/prosody:stable-10741" },
-                { "name": "jicofo", "image": "jitsi/jicofo:stable-10741" },
-                { "name": "jvb", "image": "jitsi/jvb:stable-10741" }
+                {
+                    "name": "web",
+                    "image": "jitsi/web:stable-10741"
+                },
+                {
+                    "name": "prosody",
+                    "image": "jitsi/prosody:stable-10741"
+                },
+                {
+                    "name": "jicofo",
+                    "image": "jitsi/jicofo:stable-10741"
+                },
+                {
+                    "name": "jvb",
+                    "image": "jitsi/jvb:stable-10741"
+                }
             ],
-            "upgradeFrom": ["stable-10522"],
+            "upgradeFrom": [
+                "stable-10522"
+            ],
             "isDefault": true
         }
     ]

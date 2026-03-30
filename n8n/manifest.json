@@ -158,7 +158,10 @@
         {
             "version": "1.88.0",
             "components": [
-                { "name": "n8n", "image": "n8nio/n8n:1.88.0" }
+                {
+                    "name": "n8n",
+                    "image": "n8nio/n8n:1.88.0"
+                }
             ],
             "eolDate": "2026-09-30",
             "isDefault": false
@@ -166,9 +169,14 @@
         {
             "version": "2.13.4",
             "components": [
-                { "name": "n8n", "image": "n8nio/n8n:2.13.4" }
+                {
+                    "name": "n8n",
+                    "image": "n8nio/n8n:2.13.4"
+                }
             ],
-            "upgradeFrom": ["1.88.0"],
+            "upgradeFrom": [
+                "1.88.0"
+            ],
             "breakingChanges": "Major version upgrade from 1.x to 2.x. Workflow format changes may require review.",
             "isDefault": true
         }

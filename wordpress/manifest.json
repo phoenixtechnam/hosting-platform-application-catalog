@@ -211,8 +211,14 @@
         {
             "version": "6.7",
             "components": [
-                { "name": "wordpress", "image": "wordpress:6.7-php8.3-apache" },
-                { "name": "wp-cron", "image": "wordpress:6.7-php8.3-apache" }
+                {
+                    "name": "wordpress",
+                    "image": "wordpress:6.7-php8.3-apache"
+                },
+                {
+                    "name": "wp-cron",
+                    "image": "wordpress:6.7-php8.3-apache"
+                }
             ],
             "eolDate": "2026-04-30",
             "migrationNotes": "WordPress 6.7 reaches end-of-life April 2026. Upgrade to 6.8 or 6.9.",
@@ -221,10 +227,18 @@
         {
             "version": "6.8",
             "components": [
-                { "name": "wordpress", "image": "wordpress:6.8-php8.4-apache" },
-                { "name": "wp-cron", "image": "wordpress:6.8-php8.4-apache" }
+                {
+                    "name": "wordpress",
+                    "image": "wordpress:6.8-php8.4-apache"
+                },
+                {
+                    "name": "wp-cron",
+                    "image": "wordpress:6.8-php8.4-apache"
+                }
             ],
-            "upgradeFrom": ["6.7"],
+            "upgradeFrom": [
+                "6.7"
+            ],
             "eolDate": "2026-09-30",
             "breakingChanges": "PHP minimum bumped from 8.1 to 8.2. Some classic editor plugins may need updates.",
             "isDefault": false
@@ -232,10 +246,19 @@
         {
             "version": "6.9",
             "components": [
-                { "name": "wordpress", "image": "wordpress:6.9-php8.4-apache" },
-                { "name": "wp-cron", "image": "wordpress:6.9-php8.4-apache" }
+                {
+                    "name": "wordpress",
+                    "image": "wordpress:6.9-php8.4-apache"
+                },
+                {
+                    "name": "wp-cron",
+                    "image": "wordpress:6.9-php8.4-apache"
+                }
             ],
-            "upgradeFrom": ["6.7", "6.8"],
+            "upgradeFrom": [
+                "6.7",
+                "6.8"
+            ],
             "migrationNotes": "Direct upgrade from 6.7 or 6.8 supported. No database migration needed.",
             "isDefault": true
         }

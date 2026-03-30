@@ -109,7 +109,10 @@
         {
             "version": "2.4",
             "components": [
-                { "name": "wiki", "image": "ghcr.io/requarks/wiki:2" }
+                {
+                    "name": "wiki",
+                    "image": "ghcr.io/requarks/wiki:2"
+                }
             ],
             "eolDate": "2026-09-30",
             "migrationNotes": "Wiki.js 2.4 reaches end-of-life September 2026. Upgrade to 2.5.",
@@ -118,9 +121,14 @@
         {
             "version": "2.5",
             "components": [
-                { "name": "wiki", "image": "ghcr.io/requarks/wiki:2" }
+                {
+                    "name": "wiki",
+                    "image": "ghcr.io/requarks/wiki:2"
+                }
             ],
-            "upgradeFrom": ["2.4"],
+            "upgradeFrom": [
+                "2.4"
+            ],
             "isDefault": true
         }
     ]
