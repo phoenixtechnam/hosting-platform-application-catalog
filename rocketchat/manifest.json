@@ -1,7 +1,7 @@
 {
     "name": "Rocket.Chat",
     "code": "rocketchat",
-    "version": "7",
+    "version": "8",
     "description": "Team messaging and collaboration with channels, direct messages, video calls, and file sharing.",
     "url": "https://www.rocket.chat",
     "documentation": "https://docs.rocket.chat",
@@ -13,7 +13,7 @@
         {
             "name": "rocketchat",
             "type": "deployment",
-            "image": "rocket.chat:7",
+            "image": "rocket.chat:8",
             "ports": [
                 {
                     "port": 3000,
@@ -25,7 +25,7 @@
         {
             "name": "mongodb",
             "type": "statefulset",
-            "image": "mongo:7",
+            "image": "mongo:8",
             "ports": [
                 {
                     "port": 27017,

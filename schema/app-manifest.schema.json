@@ -375,6 +375,99 @@
         "pattern": "^[a-z0-9-]+$"
       },
       "minItems": 1
+    },
+    "supportedVersions": {
+      "type": "array",
+      "description": "Multiple supported versions with upgrade paths and EOL tracking. When present, 'version' becomes the latest version alias.",
+      "items": {
+        "type": "object",
+        "required": ["version", "components"],
+        "properties": {
+          "version": {
+            "type": "string",
+            "description": "Version identifier (e.g., '6.9', '30', 'stable-10741')",
+            "minLength": 1
+          },
+          "components": {
+            "type": "array",
+            "description": "Version-specific component images (same shape as top-level components)",
+            "items": {
+              "type": "object",
+              "required": ["name", "image"],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Component name (must match a top-level component name)"
+                },
+                "image": {
+                  "type": "string",
+                  "description": "Version-specific container image reference"
+                }
+              },
+              "additionalProperties": false
+            },
+            "minItems": 1
+          },
+          "upgradeFrom": {
+            "type": "array",
+            "description": "Which versions can upgrade directly to this one",
+            "items": { "type": "string" },
+            "uniqueItems": true
+          },
+          "eolDate": {
+            "type": "string",
+            "description": "End-of-life date (ISO 8601, e.g., '2026-12-31')",
+            "format": "date"
+          },
+          "breakingChanges": {
+            "type": "string",
+            "description": "Human-readable notes about breaking changes in this version"
+          },
+          "envChanges": {
+            "type": "array",
+            "description": "Parameter changes required when upgrading to this version",
+            "items": {
+              "type": "object",
+              "required": ["key", "action"],
+              "properties": {
+                "key": { "type": "string" },
+                "action": {
+                  "type": "string",
+                  "enum": ["add", "remove", "rename"]
+                },
+                "oldKey": {
+                  "type": "string",
+                  "description": "Previous key name (for rename action)"
+                },
+                "default": {
+                  "description": "Default value for new parameters"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "migrationNotes": {
+            "type": "string",
+            "description": "Admin-visible notes about the upgrade process"
+          },
+          "minResources": {
+            "type": "object",
+            "description": "Minimum resources required for this version (if different from base)",
+            "properties": {
+              "cpu": { "type": "string", "pattern": "^[0-9]+\\.?[0-9]*$" },
+              "memory": { "type": "string", "pattern": "^[0-9]+(Mi|Gi)$" },
+              "storage": { "type": "string", "pattern": "^[0-9]+(Mi|Gi)$" }
+            },
+            "additionalProperties": false
+          },
+          "isDefault": {
+            "type": "boolean",
+            "description": "Whether this is the recommended version for new installs",
+            "default": false
+          }
+        },
+        "additionalProperties": false
+      }
     }
   },
   "additionalProperties": false

@@ -1,7 +1,7 @@
 {
     "name": "PrestaShop",
     "code": "prestashop",
-    "version": "8",
+    "version": "9",
     "description": "Launch your own online store with product management, payments, and shipping built in.",
     "url": "https://www.prestashop.com",
     "documentation": "https://docs.prestashop-project.org",
@@ -13,7 +13,7 @@
         {
             "name": "prestashop",
             "type": "deployment",
-            "image": "prestashop/prestashop:8",
+            "image": "prestashop/prestashop:9",
             "ports": [
                 {
                     "port": 80,
@@ -25,7 +25,7 @@
         {
             "name": "mariadb",
             "type": "statefulset",
-            "image": "mariadb:10.11",
+            "image": "mariadb:11.8",
             "ports": [
                 {
                     "port": 3306,

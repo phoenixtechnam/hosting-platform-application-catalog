@@ -1,7 +1,7 @@
 {
     "name": "Moodle Bitnami",
     "code": "moodle-bitnami",
-    "version": "4.5",
+    "version": "5.0",
     "description": "Run online courses, quizzes, and training programs with this full-featured learning platform.",
     "url": "https://moodle.org",
     "documentation": "https://docs.moodle.org",
@@ -13,7 +13,7 @@
         {
             "name": "moodle",
             "type": "deployment",
-            "image": "bitnami/moodle:4.5",
+            "image": "bitnami/moodle:5.0",
             "ports": [
                 {
                     "port": 8080,
@@ -25,7 +25,7 @@
         {
             "name": "mariadb",
             "type": "statefulset",
-            "image": "bitnami/mariadb:10.11",
+            "image": "bitnami/mariadb:11.8",
             "ports": [
                 {
                     "port": 3306,
@@ -37,7 +37,7 @@
         {
             "name": "redis",
             "type": "deployment",
-            "image": "redis:7-alpine",
+            "image": "redis:8-alpine",
             "ports": [
                 {
                     "port": 6379,
@@ -50,7 +50,7 @@
         {
             "name": "moodle-cron",
             "type": "cronjob",
-            "image": "bitnami/moodle:4.5",
+            "image": "bitnami/moodle:5.0",
             "schedule": "*/1 * * * *"
         }
     ],

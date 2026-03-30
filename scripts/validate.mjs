@@ -154,6 +154,80 @@ for (const dir of dirs) {
     error(`${dir}: duplicate parameter keys found`);
   }
 
+  // Reject floating / unpinned image tags
+  const FLOATING_TAGS = new Set([
+    'latest', 'release', 'stable', 'edge', 'nightly',
+    'dev', 'canary', 'beta', 'alpha', 'rc',
+  ]);
+
+  for (const comp of manifest.components) {
+    const image = comp.image;
+    const colonIdx = image.lastIndexOf(':');
+    if (colonIdx === -1 || colonIdx === image.length - 1) {
+      error(`${dir}: component "${comp.name}" image "${image}" has no tag — implicit :latest is not allowed. Pin to a specific version.`);
+      continue;
+    }
+    const tag = image.slice(colonIdx + 1);
+    if (FLOATING_TAGS.has(tag.toLowerCase())) {
+      error(`${dir}: component "${comp.name}" image "${image}" uses floating tag ":${tag}". Pin to a specific version.`);
+    }
+  }
+
+  // Also check cronjobs if present
+  if (manifest.cronjobs) {
+    for (const cj of manifest.cronjobs) {
+      if (cj.image) {
+        const colonIdx = cj.image.lastIndexOf(':');
+        if (colonIdx === -1 || colonIdx === cj.image.length - 1) {
+          error(`${dir}: cronjob "${cj.name}" image "${cj.image}" has no tag — implicit :latest is not allowed.`);
+          continue;
+        }
+        const tag = cj.image.slice(colonIdx + 1);
+        if (FLOATING_TAGS.has(tag.toLowerCase())) {
+          error(`${dir}: cronjob "${cj.name}" image "${cj.image}" uses floating tag ":${tag}". Pin to a specific version.`);
+        }
+      }
+    }
+  }
+
+  // Validate supportedVersions if present
+  if (manifest.supportedVersions) {
+    const componentNames = new Set(manifest.components.map((c) => c.name));
+    const versionIds = new Set();
+
+    for (const sv of manifest.supportedVersions) {
+      if (versionIds.has(sv.version)) {
+        error(`${dir}: duplicate supportedVersion "${sv.version}"`);
+      }
+      versionIds.add(sv.version);
+
+      // Check version-specific component images for floating tags
+      for (const comp of sv.components) {
+        if (!componentNames.has(comp.name)) {
+          error(`${dir}: supportedVersion "${sv.version}" references unknown component "${comp.name}"`);
+        }
+        const colonIdx = comp.image.lastIndexOf(':');
+        if (colonIdx === -1 || colonIdx === comp.image.length - 1) {
+          error(`${dir}: supportedVersion "${sv.version}" component "${comp.name}" image "${comp.image}" has no tag`);
+          continue;
+        }
+        const tag = comp.image.slice(colonIdx + 1);
+        if (FLOATING_TAGS.has(tag.toLowerCase())) {
+          error(`${dir}: supportedVersion "${sv.version}" component "${comp.name}" image "${comp.image}" uses floating tag ":${tag}"`);
+        }
+      }
+
+      // Validate upgradeFrom references valid versions
+      if (sv.upgradeFrom) {
+        for (const from of sv.upgradeFrom) {
+          if (!versionIds.has(from) && !manifest.supportedVersions.some((v) => v.version === from)) {
+            warn(`${dir}: supportedVersion "${sv.version}" upgradeFrom references "${from}" which is not in supportedVersions`);
+          }
+        }
+      }
+    }
+  }
+
   ok(`${dir}: valid (${manifest.category}, ${manifest.components.length} components)`);
 }
 

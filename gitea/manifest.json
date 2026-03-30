@@ -1,7 +1,7 @@
 {
     "name": "Gitea",
     "code": "gitea",
-    "version": "1.22",
+    "version": "1.25",
     "description": "A lightweight, self-hosted Git service for managing your code repositories and team collaboration.",
     "url": "https://about.gitea.com",
     "documentation": "https://docs.gitea.com",
@@ -13,7 +13,7 @@
         {
             "name": "gitea",
             "type": "deployment",
-            "image": "gitea/gitea:1.22",
+            "image": "gitea/gitea:1.25",
             "ports": [
                 {
                     "port": 3000,
@@ -30,7 +30,7 @@
         {
             "name": "postgresql",
             "type": "statefulset",
-            "image": "postgres:16-alpine",
+            "image": "postgres:17-alpine",
             "ports": [
                 {
                     "port": 5432,

@@ -1,7 +1,7 @@
 {
     "name": "n8n",
     "code": "n8n",
-    "version": "latest",
+    "version": "2.13.4",
     "description": "Automate repetitive tasks by connecting your apps and services with visual drag-and-drop workflows.",
     "url": "https://n8n.io",
     "documentation": "https://docs.n8n.io",
@@ -13,7 +13,7 @@
         {
             "name": "n8n",
             "type": "deployment",
-            "image": "n8nio/n8n:latest",
+            "image": "n8nio/n8n:2.13.4",
             "ports": [
                 {
                     "port": 5678,
@@ -25,7 +25,7 @@
         {
             "name": "postgresql",
             "type": "statefulset",
-            "image": "postgres:16-alpine",
+            "image": "postgres:17-alpine",
             "ports": [
                 {
                     "port": 5432,

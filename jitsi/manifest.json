@@ -1,7 +1,7 @@
 {
     "name": "Jitsi Meet",
     "code": "jitsi",
-    "version": "stable-9823",
+    "version": "stable-10741",
     "description": "Host secure video meetings and conferences on your own server — no account required for participants.",
     "url": "https://jitsi.org",
     "documentation": "https://jitsi.github.io/handbook/",
@@ -13,7 +13,7 @@
         {
             "name": "web",
             "type": "deployment",
-            "image": "jitsi/web:stable-9823",
+            "image": "jitsi/web:stable-10741",
             "ports": [
                 {
                     "port": 80,
@@ -25,7 +25,7 @@
         {
             "name": "prosody",
             "type": "deployment",
-            "image": "jitsi/prosody:stable-9823",
+            "image": "jitsi/prosody:stable-10741",
             "ports": [
                 {
                     "port": 5222,
@@ -42,13 +42,13 @@
         {
             "name": "jicofo",
             "type": "deployment",
-            "image": "jitsi/jicofo:stable-9823",
+            "image": "jitsi/jicofo:stable-10741",
             "ports": []
         },
         {
             "name": "jvb",
             "type": "deployment",
-            "image": "jitsi/jvb:stable-9823",
+            "image": "jitsi/jvb:stable-10741",
             "ports": [
                 {
                     "port": 10000,
@@ -60,7 +60,7 @@
         {
             "name": "coturn",
             "type": "deployment",
-            "image": "coturn/coturn:4.6",
+            "image": "coturn/coturn:4.9",
             "ports": [
                 {
                     "port": 3478,

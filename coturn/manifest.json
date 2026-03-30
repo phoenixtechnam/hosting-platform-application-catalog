@@ -1,7 +1,7 @@
 {
   "name": "Coturn TURN Server",
   "code": "coturn",
-  "version": "4.6",
+  "version": "4.9",
   "description": "A TURN/STUN relay server that ensures video calls work reliably across firewalls and networks.",
   "url": "https://github.com/coturn/coturn",
   "documentation": "https://github.com/coturn/coturn/wiki",
@@ -13,7 +13,7 @@
     {
       "name": "coturn",
       "type": "deployment",
-      "image": "coturn/coturn:4.6",
+      "image": "coturn/coturn:4.9",
       "ports": [
         {
           "port": 3478,

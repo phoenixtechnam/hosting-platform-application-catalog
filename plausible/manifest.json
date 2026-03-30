@@ -1,7 +1,7 @@
 {
     "name": "Plausible Analytics",
     "code": "plausible",
-    "version": "2.0",
+    "version": "3.0",
     "description": "Simple, privacy-friendly website analytics that show you what matters without tracking individuals.",
     "url": "https://plausible.io",
     "documentation": "https://plausible.io/docs",
@@ -13,7 +13,7 @@
         {
             "name": "plausible",
             "type": "deployment",
-            "image": "ghcr.io/plausible/community-edition:v2",
+            "image": "ghcr.io/plausible/community-edition:v3",
             "ports": [
                 {
                     "port": 8000,
@@ -25,7 +25,7 @@
         {
             "name": "postgresql",
             "type": "statefulset",
-            "image": "postgres:16-alpine",
+            "image": "postgres:17-alpine",
             "ports": [
                 {
                     "port": 5432,
@@ -37,7 +37,7 @@
         {
             "name": "clickhouse",
             "type": "statefulset",
-            "image": "clickhouse/clickhouse-server:24",
+            "image": "clickhouse/clickhouse-server:26",
             "ports": [
                 {
                     "port": 8123,

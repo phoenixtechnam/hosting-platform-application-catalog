@@ -1,7 +1,7 @@
 {
     "name": "Immich",
     "code": "immich",
-    "version": "release",
+    "version": "2.6.3",
     "description": "Back up and browse your photos and videos privately — a self-hosted Google Photos alternative.",
     "url": "https://immich.app",
     "documentation": "https://immich.app/docs/overview/introduction",
@@ -13,7 +13,7 @@
         {
             "name": "immich-server",
             "type": "deployment",
-            "image": "ghcr.io/immich-app/immich-server:release",
+            "image": "ghcr.io/immich-app/immich-server:v2.6.3",
             "ports": [
                 {
                     "port": 2283,
@@ -25,7 +25,7 @@
         {
             "name": "immich-ml",
             "type": "deployment",
-            "image": "ghcr.io/immich-app/immich-machine-learning:release",
+            "image": "ghcr.io/immich-app/immich-machine-learning:v2.6.3",
             "ports": [
                 {
                     "port": 3003,
@@ -49,7 +49,7 @@
         {
             "name": "redis",
             "type": "deployment",
-            "image": "redis:7-alpine",
+            "image": "redis:8-alpine",
             "ports": [
                 {
                     "port": 6379,

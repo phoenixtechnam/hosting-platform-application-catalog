@@ -1,10 +1,10 @@
 {
     "name": "WordPress",
     "code": "wordpress",
-    "version": "6.7",
+    "version": "6.9",
     "description": "Create and manage your own website or blog with the world's most popular content management system.",
     "url": "https://wordpress.org",
-    "documentation": "https://developer.wordpress.org/advanced-administration/",
+    "documentation": "https://learn.wordpress.org/course/beginner-wordpress-user/",
     "category": "cms",
     "tenancy": [
         "single-tenant"
@@ -13,7 +13,7 @@
         {
             "name": "wordpress",
             "type": "deployment",
-            "image": "wordpress:6.7-php8.4-apache",
+            "image": "wordpress:6.9-php8.4-apache",
             "ports": [
                 {
                     "port": 80,
@@ -25,7 +25,7 @@
         {
             "name": "mariadb",
             "type": "statefulset",
-            "image": "mariadb:10.11",
+            "image": "mariadb:11.8",
             "ports": [
                 {
                     "port": 3306,
@@ -37,7 +37,7 @@
         {
             "name": "redis",
             "type": "deployment",
-            "image": "redis:7-alpine",
+            "image": "redis:8-alpine",
             "ports": [
                 {
                     "port": 6379,
@@ -50,7 +50,7 @@
         {
             "name": "wp-cron",
             "type": "cronjob",
-            "image": "wordpress:6.7-php8.4-apache",
+            "image": "wordpress:6.9-php8.4-apache",
             "schedule": "*/15 * * * *",
             "optional": true
         }
@@ -206,5 +206,38 @@
         "php",
         "blog",
         "website"
+    ],
+    "supportedVersions": [
+        {
+            "version": "6.7",
+            "components": [
+                { "name": "wordpress", "image": "wordpress:6.7-php8.3-apache" },
+                { "name": "wp-cron", "image": "wordpress:6.7-php8.3-apache" }
+            ],
+            "eolDate": "2026-04-30",
+            "migrationNotes": "WordPress 6.7 reaches end-of-life April 2026. Upgrade to 6.8 or 6.9.",
+            "isDefault": false
+        },
+        {
+            "version": "6.8",
+            "components": [
+                { "name": "wordpress", "image": "wordpress:6.8-php8.4-apache" },
+                { "name": "wp-cron", "image": "wordpress:6.8-php8.4-apache" }
+            ],
+            "upgradeFrom": ["6.7"],
+            "eolDate": "2026-09-30",
+            "breakingChanges": "PHP minimum bumped from 8.1 to 8.2. Some classic editor plugins may need updates.",
+            "isDefault": false
+        },
+        {
+            "version": "6.9",
+            "components": [
+                { "name": "wordpress", "image": "wordpress:6.9-php8.4-apache" },
+                { "name": "wp-cron", "image": "wordpress:6.9-php8.4-apache" }
+            ],
+            "upgradeFrom": ["6.7", "6.8"],
+            "migrationNotes": "Direct upgrade from 6.7 or 6.8 supported. No database migration needed.",
+            "isDefault": true
+        }
     ]
 }

@@ -1,7 +1,7 @@
 {
     "name": "Uptime Kuma",
     "code": "uptime-kuma",
-    "version": "1",
+    "version": "2",
     "description": "Monitor your websites and services with instant alerts when something goes down.",
     "url": "https://uptime.kuma.pet",
     "documentation": "https://github.com/louislam/uptime-kuma/wiki",
@@ -13,7 +13,7 @@
         {
             "name": "uptime-kuma",
             "type": "deployment",
-            "image": "louislam/uptime-kuma:1",
+            "image": "louislam/uptime-kuma:2",
             "ports": [
                 {
                     "port": 3001,

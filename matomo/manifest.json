@@ -25,7 +25,7 @@
         {
             "name": "mariadb",
             "type": "statefulset",
-            "image": "mariadb:10.11",
+            "image": "mariadb:11.8",
             "ports": [
                 {
                     "port": 3306,

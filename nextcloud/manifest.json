@@ -1,7 +1,7 @@
 {
     "name": "Nextcloud",
     "code": "nextcloud",
-    "version": "30",
+    "version": "33",
     "description": "Your own private cloud for files, calendars, contacts, and real-time document collaboration.",
     "url": "https://nextcloud.com",
     "documentation": "https://docs.nextcloud.com",
@@ -14,7 +14,7 @@
         {
             "name": "nextcloud",
             "type": "deployment",
-            "image": "nextcloud:30-apache",
+            "image": "nextcloud:33-apache",
             "ports": [
                 {
                     "port": 80,
@@ -26,7 +26,7 @@
         {
             "name": "mariadb",
             "type": "statefulset",
-            "image": "mariadb:10.11",
+            "image": "mariadb:11.8",
             "ports": [
                 {
                     "port": 3306,
@@ -38,7 +38,7 @@
         {
             "name": "redis",
             "type": "deployment",
-            "image": "redis:7-alpine",
+            "image": "redis:8-alpine",
             "ports": [
                 {
                     "port": 6379,
@@ -51,7 +51,7 @@
         {
             "name": "collabora",
             "type": "deployment",
-            "image": "collabora/code:24.04",
+            "image": "collabora/code:25.04",
             "ports": [
                 {
                     "port": 9980,
@@ -64,7 +64,7 @@
         {
             "name": "cron",
             "type": "cronjob",
-            "image": "nextcloud:30-apache",
+            "image": "nextcloud:33-apache",
             "schedule": "*/5 * * * *"
         }
     ],

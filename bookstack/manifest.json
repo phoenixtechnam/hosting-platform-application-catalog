@@ -1,7 +1,7 @@
 {
     "name": "BookStack",
     "code": "bookstack",
-    "version": "latest",
+    "version": "26.03.2",
     "description": "Organize your team's knowledge with an easy-to-use wiki that anyone can edit and search.",
     "url": "https://www.bookstackapp.com",
     "documentation": "https://www.bookstackapp.com/docs/",
@@ -13,7 +13,7 @@
         {
             "name": "bookstack",
             "type": "deployment",
-            "image": "lscr.io/linuxserver/bookstack:latest",
+            "image": "lscr.io/linuxserver/bookstack:v26.03.2",
             "ports": [
                 {
                     "port": 80,
@@ -25,7 +25,7 @@
         {
             "name": "mariadb",
             "type": "statefulset",
-            "image": "mariadb:10.11",
+            "image": "mariadb:11.8",
             "ports": [
                 {
                     "port": 3306,

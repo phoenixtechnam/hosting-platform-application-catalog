@@ -25,7 +25,7 @@
         {
             "name": "postgresql",
             "type": "statefulset",
-            "image": "postgres:16-alpine",
+            "image": "postgres:17-alpine",
             "ports": [
                 {
                     "port": 5432,
@@ -37,7 +37,7 @@
         {
             "name": "redis",
             "type": "deployment",
-            "image": "redis:7-alpine",
+            "image": "redis:8-alpine",
             "ports": [
                 {
                     "port": 6379,
