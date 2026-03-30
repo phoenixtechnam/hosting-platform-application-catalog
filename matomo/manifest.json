@@ -142,5 +142,24 @@
         "matomo",
         "privacy",
         "gdpr"
+    ],
+    "supportedVersions": [
+        {
+            "version": "4",
+            "components": [
+                { "name": "matomo", "image": "matomo:4" }
+            ],
+            "eolDate": "2026-09-30",
+            "isDefault": false
+        },
+        {
+            "version": "5",
+            "components": [
+                { "name": "matomo", "image": "matomo:5" }
+            ],
+            "upgradeFrom": ["4"],
+            "breakingChanges": "Major version upgrade. Some plugins may need updates.",
+            "isDefault": true
+        }
     ]
 }

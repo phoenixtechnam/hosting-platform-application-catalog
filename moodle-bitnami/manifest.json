@@ -206,5 +206,26 @@
         "elearning",
         "courses",
         "moodle"
+    ],
+    "supportedVersions": [
+        {
+            "version": "4.5",
+            "components": [
+                { "name": "moodle", "image": "bitnami/moodle:4.5" },
+                { "name": "moodle-cron", "image": "bitnami/moodle:4.5" }
+            ],
+            "eolDate": "2026-09-30",
+            "isDefault": false
+        },
+        {
+            "version": "5.0",
+            "components": [
+                { "name": "moodle", "image": "bitnami/moodle:5.0" },
+                { "name": "moodle-cron", "image": "bitnami/moodle:5.0" }
+            ],
+            "upgradeFrom": ["4.5"],
+            "breakingChanges": "Major version upgrade from Moodle 4.x to 5.x. Review plugin compatibility.",
+            "isDefault": true
+        }
     ]
 }

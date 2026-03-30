@@ -229,5 +229,26 @@
         "caldav",
         "carddav",
         "office"
+    ],
+    "supportedVersions": [
+        {
+            "version": "32",
+            "components": [
+                { "name": "nextcloud", "image": "nextcloud:32-apache" },
+                { "name": "cron", "image": "nextcloud:32-apache" }
+            ],
+            "eolDate": "2026-09-30",
+            "migrationNotes": "Nextcloud upgrades must be sequential. Upgrade to 33 before any future version.",
+            "isDefault": false
+        },
+        {
+            "version": "33",
+            "components": [
+                { "name": "nextcloud", "image": "nextcloud:33-apache" },
+                { "name": "cron", "image": "nextcloud:33-apache" }
+            ],
+            "upgradeFrom": ["32"],
+            "isDefault": true
+        }
     ]
 }

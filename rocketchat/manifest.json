@@ -148,5 +148,25 @@
         "messaging",
         "rocketchat",
         "communication"
+    ],
+    "supportedVersions": [
+        {
+            "version": "7",
+            "components": [
+                { "name": "rocketchat", "image": "rocket.chat:7" }
+            ],
+            "eolDate": "2026-09-30",
+            "migrationNotes": "Rocket.Chat 7.x reaches end-of-life September 2026. Upgrade to 8.x.",
+            "isDefault": false
+        },
+        {
+            "version": "8",
+            "components": [
+                { "name": "rocketchat", "image": "rocket.chat:8" }
+            ],
+            "upgradeFrom": ["7"],
+            "breakingChanges": "Major version upgrade. Apps marketplace changes.",
+            "isDefault": true
+        }
     ]
 }

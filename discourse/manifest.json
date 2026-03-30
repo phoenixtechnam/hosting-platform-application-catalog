@@ -160,5 +160,25 @@
         "community",
         "discourse",
         "discussion"
+    ],
+    "supportedVersions": [
+        {
+            "version": "2",
+            "components": [
+                { "name": "discourse", "image": "bitnami/discourse:2" }
+            ],
+            "eolDate": "2026-09-30",
+            "migrationNotes": "Discourse 2.x reaches end-of-life September 2026. Upgrade to 3.x.",
+            "isDefault": false
+        },
+        {
+            "version": "3",
+            "components": [
+                { "name": "discourse", "image": "bitnami/discourse:3" }
+            ],
+            "upgradeFrom": ["2"],
+            "breakingChanges": "Major version upgrade. Check plugin compatibility.",
+            "isDefault": true
+        }
     ]
 }

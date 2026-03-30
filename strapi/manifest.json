@@ -125,5 +125,25 @@
         "headless",
         "strapi",
         "api"
+    ],
+    "supportedVersions": [
+        {
+            "version": "4",
+            "components": [
+                { "name": "strapi", "image": "node:22-alpine" }
+            ],
+            "eolDate": "2026-09-30",
+            "migrationNotes": "Strapi v4 reaches end-of-life September 2026. Upgrade to v5.",
+            "isDefault": false
+        },
+        {
+            "version": "5",
+            "components": [
+                { "name": "strapi", "image": "node:22-alpine" }
+            ],
+            "upgradeFrom": ["4"],
+            "breakingChanges": "Major version upgrade from Strapi v4 to v5. Content-type schema changes.",
+            "isDefault": true
+        }
     ]
 }

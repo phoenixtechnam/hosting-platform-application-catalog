@@ -126,5 +126,25 @@
         "directus",
         "api",
         "dashboard"
+    ],
+    "supportedVersions": [
+        {
+            "version": "10",
+            "components": [
+                { "name": "directus", "image": "directus/directus:10" }
+            ],
+            "eolDate": "2026-09-30",
+            "migrationNotes": "Directus 10.x reaches end-of-life September 2026. Upgrade to 11.x.",
+            "isDefault": false
+        },
+        {
+            "version": "11",
+            "components": [
+                { "name": "directus", "image": "directus/directus:11" }
+            ],
+            "upgradeFrom": ["10"],
+            "breakingChanges": "Major version upgrade. API breaking changes.",
+            "isDefault": true
+        }
     ]
 }
